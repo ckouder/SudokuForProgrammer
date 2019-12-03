@@ -1,7 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="appTheme">
+    <style name="AppTheme" parent="Theme.AppCompat.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="android:textColor">@color/colorPrimary__100</item>
         <item name="android:colorBackground">@color/colorBackground</item>
@@ -12,16 +12,18 @@
 
     <!--button themes-->
     <!--button in main page-->
-    <style name="button__xl" parent="appTheme">
+    <style name="button__xl" parent="AppTheme">
         <item name="android:textColor">@color/colorPrimary__70</item>
+        <item name="android:background">@color/colorBackground</item>
         <item name="android:fontFamily">@font/pt_mono</item>
 
         <item name="android:fontWeight">@integer/font_weight__bold</item>
         <item name="android:textSize">@dimen/font_size__h3</item>
     </style>
 
-    <style name="button__lg" parent="appTheme">
+    <style name="button__lg" parent="AppTheme">
         <item name="android:paddingBottom">@dimen/margin__1x</item>
+        <item name="android:background">@color/colorBackground</item>
         <item name="android:paddingTop">@dimen/margin__1x</item>
 
         <item name="android:textColor">@color/colorPrimary__100</item>
@@ -34,6 +36,7 @@
     <!--not used-->
     <style name="button__md">
         <item name="android:textColor">@color/colorPrimary__100</item>
+        <item name="android:background">@color/colorBackground</item>
         <item name="android:fontFamily">@font/pt_mono</item>
         <item name="android:fontWeight">@integer/font_weight__bold</item>
         <item name="android:textSize">@dimen/font_size__h3</item>
@@ -41,14 +44,15 @@
 
     <!--button in game control-->
     <style name="button__md__70">
-        <item name="android:textColor">@color/colorPrimary__100</item>
         <item name="android:fontFamily">@font/pt_mono</item>
+        <item name="android:background">@color/colorBackground</item>
         <item name="android:textColor">@color/colorPrimary__70</item>
     </style>
 
     <!--button in dialog-->
     <style name="button__sm">
         <item name="android:textColor">@color/colorPrimary__100</item>
+        <item name="android:background">@color/colorBackground</item>
         <item name="android:fontFamily">@font/pt_mono</item>
         <item name="android:fontWeight">@integer/font_weight__bold</item>
         <item name="android:textSize">@dimen/font_size__body</item>

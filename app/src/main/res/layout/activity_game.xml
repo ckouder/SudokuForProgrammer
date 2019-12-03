@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/pt_mono"
-            android:text="<Programer"
+            android:text="@string/app_title_1"
             android:textColor="@color/colorPrimary__100"
             android:textSize="@dimen/font_size__h1"
             android:textStyle="bold" />
@@ -33,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/pt_mono"
-            android:text="Sudoku/>"
+            android:text="@string/app_title_2"
             android:textColor="@color/colorPrimary__100"
             android:textSize="@dimen/font_size__h2"
             android:textStyle="bold" />

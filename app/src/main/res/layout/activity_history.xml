@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_history"
-    style="@style/appTheme"
+    style="@style/AppTheme"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/pt_mono"
-            android:text="<Programer"
+            android:text="@string/app_title_1"
             android:textColor="@color/colorPrimary__100"
             android:textSize="@dimen/font_size__h1"
             android:textStyle="bold" />
@@ -34,7 +34,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/pt_mono"
-            android:text="Sudoku/>"
+            android:text="@string/app_title_2"
             android:textColor="@color/colorPrimary__100"
             android:textSize="@dimen/font_size__h2"
             android:textStyle="bold" />
@@ -54,7 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/pt_mono"
-            android:text="<highest-score>"
+            android:text="@string/history_title"
             android:textColor="@color/colorPrimary__50"
             android:textSize="@dimen/font_size__h4"
             android:textStyle="bold" />
@@ -77,7 +77,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pt_mono"
-                    android:text="<date>"
+                    android:text="@string/history_date"
                     android:textColor="@color/colorPrimary__50"
                     android:textSize="@dimen/font_size__h4"
                     android:textStyle="bold" />
@@ -98,7 +98,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pt_mono"
-                    android:text="</date>"
+                    android:text="@string/history_date_end"
                     android:textColor="@color/colorPrimary__50"
                     android:textSize="@dimen/font_size__h4"
                     android:textStyle="bold" />
@@ -125,7 +125,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pt_mono"
-                    android:text="<creator>"
+                    android:text="@string/history_creator"
                     android:textColor="@color/colorPrimary__50"
                     android:textSize="@dimen/font_size__h4"
                     android:textStyle="bold" />
@@ -146,7 +146,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/pt_mono"
-                    android:text="</creator>"
+                    android:text="@string/history_creator_end"
                     android:textColor="@color/colorPrimary__50"
                     android:textSize="@dimen/font_size__h4"
                     android:textStyle="bold" />
@@ -159,7 +159,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="@font/pt_mono"
-            android:text="</highest-score>"
+            android:text="@string/history_title_end"
             android:textColor="@color/colorPrimary__50"
             android:textSize="@dimen/font_size__h4"
             android:textStyle="bold" />
