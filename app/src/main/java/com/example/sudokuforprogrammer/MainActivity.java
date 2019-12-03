@@ -4,8 +4,12 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -19,5 +23,12 @@ public class MainActivity extends AppCompatActivity {
         // Hide the status bar.
         int uiOptions = View.SYSTEM_UI_FLAG_FULLSCREEN;
         decorView.setSystemUiVisibility(uiOptions);
+
+        Button mainHistroy = findViewById(R.id.btn_mainHistory);
+
+        mainHistroy.setOnClickListener(v -> {
+            Intent historyActivity = new Intent(this, HistoryActivity.class);
+            startActivity(historyActivity);
+        });
     }
 }

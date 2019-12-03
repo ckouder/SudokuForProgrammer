@@ -4,7 +4,7 @@
     <string name="app_title_1">&lt;Programer</string>
     <string name="app_title_2">Sudoku\/&gt;</string>
 
-    <string name="game_quit">:\\q</string>
+    <string name="game_quit">:q</string>
 
     <string name="history_title">&lt;highest-score&gt;</string>
     <string name="history_title_end">&lt;\/highest-score&gt;</string>
