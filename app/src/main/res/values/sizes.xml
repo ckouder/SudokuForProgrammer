@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="size_sudokuPaperLength">336dp</dimen>
+    <dimen name="size_sudokuNumFrame">168dp</dimen>
+    <dimen name="size_sudokuControlFram">130dp</dimen>
+
+    <dimen name="size_sudokuNumBtn">39dp</dimen>
+    <dimen name="size_sudokuControlBtn">40dp</dimen>
+
+    <dimen name="size_sudokuUnit">18.8dp</dimen>
+</resources>

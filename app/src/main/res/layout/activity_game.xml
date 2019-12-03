@@ -1,0 +1,654 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    android:paddingLeft="@dimen/margin__2x"
+    android:paddingTop="@dimen/margin__3x"
+    android:paddingRight="@dimen/margin__2x"
+    android:paddingBottom="@dimen/margin__2x">
+
+    <LinearLayout
+        android:id="@+id/game_title_box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/game_title_0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pt_mono"
+            android:text="<Programer"
+            android:textColor="@color/colorPrimary__100"
+            android:textSize="@dimen/font_size__h1"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/game_title_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pt_mono"
+            android:text="Sudoku/>"
+            android:textColor="@color/colorPrimary__100"
+            android:textSize="@dimen/font_size__h2"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/sudokuPaper"
+        app:layout_constraintEnd_toEndOf="@+id/sudokuPaper"
+        app:layout_constraintStart_toStartOf="@+id/sudokuPaper">
+
+        <Button
+            android:id="@+id/btn_gameQuit"
+            style="@style/button__xl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin__4x"
+            android:text="@string/game_quit"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/btn_gameControl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin__4x"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_pause" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TableLayout
+        android:id="@+id/sudokuPaper"
+        android:layout_width="@dimen/size_sudokuPaperLength"
+        android:layout_height="@dimen/size_sudokuPaperLength"
+        android:background="@drawable/border__normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="1.5dp"
+            android:paddingTop="1.5dp">
+
+            <fragment
+                android:id="@+id/fragment"
+                android:name="com.example.sudokuforprogrammer.sudokuBlock"
+                android:layout_width="83.2dp"
+                android:layout_height="83.2dp" />
+
+            <fragment
+                android:id="@+id/fragment2"
+                android:name="com.example.sudokuforprogrammer.sudokuBlock"
+                android:layout_width="83.2dp"
+                android:layout_height="83.2dp" />
+
+            <fragment
+                android:id="@+id/fragment3"
+                android:name="com.example.sudokuforprogrammer.sudokuBlock"
+                android:layout_width="83.2dp"
+                android:layout_height="83.2dp" />
+
+            <fragment
+                android:id="@+id/fragment4"
+                android:name="com.example.sudokuforprogrammer.sudokuBlock"
+                android:layout_width="83.2dp"
+                android:layout_height="83.2dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="1.5dp">
+
+            <fragment
+                android:id="@+id/fragmen5"
+                android:name="com.example.sudokuforprogrammer.sudokuBlock"
+                android:layout_width="83.2dp"
+                android:layout_height="83.2dp" />
+
+            <fragment
+                android:id="@+id/fragment6"
+                android:name="com.example.sudokuforprogrammer.sudokuBlock"
+                android:layout_width="83.2dp"
+                android:layout_height="83.2dp" />
+
+            <fragment
+                android:id="@+id/fragment7"
+                android:name="com.example.sudokuforprogrammer.sudokuBlock"
+                android:layout_width="83.2dp"
+                android:layout_height="83.2dp" />
+
+            <fragment
+                android:id="@+id/fragment8"
+                android:name="com.example.sudokuforprogrammer.sudokuBlock"
+                android:layout_width="83.2dp"
+                android:layout_height="83.2dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="1.5dp">
+
+            <fragment
+                android:id="@+id/fragment9"
+                android:name="com.example.sudokuforprogrammer.sudokuBlock"
+                android:layout_width="83.2dp"
+                android:layout_height="83.2dp" />
+
+            <fragment
+                android:id="@+id/fragment10"
+                android:name="com.example.sudokuforprogrammer.sudokuBlock"
+                android:layout_width="83.2dp"
+                android:layout_height="83.2dp" />
+
+            <fragment
+                android:id="@+id/fragment11"
+                android:name="com.example.sudokuforprogrammer.sudokuBlock"
+                android:layout_width="83.2dp"
+                android:layout_height="83.2dp" />
+
+            <fragment
+                android:id="@+id/fragment12"
+                android:name="com.example.sudokuforprogrammer.sudokuBlock"
+                android:layout_width="83.2dp"
+                android:layout_height="83.2dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="1.5dp">
+
+            <fragment
+                android:id="@+id/fragment13"
+                android:name="com.example.sudokuforprogrammer.sudokuBlock"
+                android:layout_width="83.2dp"
+                android:layout_height="83.2dp" />
+
+            <fragment
+                android:id="@+id/fragment14"
+                android:name="com.example.sudokuforprogrammer.sudokuBlock"
+                android:layout_width="83.2dp"
+                android:layout_height="83.2dp" />
+
+            <fragment
+                android:id="@+id/fragment15"
+                android:name="com.example.sudokuforprogrammer.sudokuBlock"
+                android:layout_width="83.2dp"
+                android:layout_height="83.2dp" />
+
+            <fragment
+                android:id="@+id/fragment16"
+                android:name="com.example.sudokuforprogrammer.sudokuBlock"
+                android:layout_width="83.2dp"
+                android:layout_height="83.2dp" />
+        </TableRow>
+
+    </TableLayout>
+
+    <TableLayout
+        android:id="@+id/sudokuNumBtnsContainer"
+        android:layout_width="168dp"
+        android:layout_height="168dp"
+        android:background="@drawable/border__normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/sudokuPaper">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <View
+                android:id="@+id/view12"
+                android:layout_width="wrap_content"
+                android:layout_height="3dp"
+                android:background="@color/colorPrimary__70" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_Num0"
+                    android:layout_width="@dimen/size_sudokuNumBtn"
+                    android:layout_height="@dimen/size_sudokuNumBtn"
+                    android:fontFamily="@font/pt_mono"
+                    android:text="0"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimary__70"
+                    android:textSize="@dimen/font_size__h3"
+                    android:textStyle="bold"
+                    tools:layout_editor_absoluteX="184dp"
+                    tools:layout_editor_absoluteY="604dp" />
+
+                <View
+                    android:id="@+id/view"
+                    android:layout_width="3dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimary__70" />
+
+                <Button
+                    android:id="@+id/btn_Num1"
+                    android:layout_width="@dimen/size_sudokuNumBtn"
+                    android:layout_height="@dimen/size_sudokuNumBtn"
+                    android:fontFamily="@font/pt_mono"
+                    android:text="1"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimary__70"
+                    android:textSize="@dimen/font_size__h3"
+                    android:textStyle="bold" />
+
+                <View
+                    android:id="@+id/view14"
+                    android:layout_width="3dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimary__70" />
+
+                <Button
+                    android:id="@+id/btn_Num2"
+                    android:layout_width="@dimen/size_sudokuNumBtn"
+                    android:layout_height="@dimen/size_sudokuNumBtn"
+                    android:fontFamily="@font/pt_mono"
+                    android:text="2"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimary__70"
+                    android:textSize="@dimen/font_size__h3"
+                    android:textStyle="bold" />
+
+                <View
+                    android:id="@+id/view13"
+                    android:layout_width="3dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimary__70" />
+
+                <Button
+                    android:id="@+id/btn_Num3"
+                    android:layout_width="@dimen/size_sudokuNumBtn"
+                    android:layout_height="@dimen/size_sudokuNumBtn"
+                    android:fontFamily="@font/pt_mono"
+                    android:text="3"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimary__70"
+                    android:textSize="@dimen/font_size__h3"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <View
+                android:id="@+id/view12"
+                android:layout_width="wrap_content"
+                android:layout_height="3dp"
+                android:background="@color/colorPrimary__70" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_Num4"
+                    android:layout_width="@dimen/size_sudokuNumBtn"
+                    android:layout_height="@dimen/size_sudokuNumBtn"
+                    android:fontFamily="@font/pt_mono"
+                    android:text="4"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimary__70"
+                    android:textSize="@dimen/font_size__h3"
+                    android:textStyle="bold"
+                    tools:layout_editor_absoluteX="184dp"
+                    tools:layout_editor_absoluteY="604dp" />
+
+                <View
+                    android:id="@+id/view1"
+                    android:layout_width="3dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimary__70" />
+
+                <Button
+                    android:id="@+id/btn_Num5"
+                    android:layout_width="@dimen/size_sudokuNumBtn"
+                    android:layout_height="@dimen/size_sudokuNumBtn"
+                    android:fontFamily="@font/pt_mono"
+                    android:text="5"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimary__70"
+                    android:textSize="@dimen/font_size__h3"
+                    android:textStyle="bold" />
+
+                <View
+                    android:id="@+id/view2"
+                    android:layout_width="3dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimary__70" />
+
+                <Button
+                    android:id="@+id/btn_Num6"
+                    android:layout_width="@dimen/size_sudokuNumBtn"
+                    android:layout_height="@dimen/size_sudokuNumBtn"
+                    android:fontFamily="@font/pt_mono"
+                    android:text="6"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimary__70"
+                    android:textSize="@dimen/font_size__h3"
+                    android:textStyle="bold" />
+
+                <View
+                    android:id="@+id/view3"
+                    android:layout_width="3dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimary__70" />
+
+                <Button
+                    android:id="@+id/btn_Num7"
+                    android:layout_width="@dimen/size_sudokuNumBtn"
+                    android:layout_height="@dimen/size_sudokuNumBtn"
+                    android:fontFamily="@font/pt_mono"
+                    android:text="7"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimary__70"
+                    android:textSize="@dimen/font_size__h3"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <View
+                android:id="@+id/view11"
+                android:layout_width="wrap_content"
+                android:layout_height="3dp"
+                android:background="@color/colorPrimary__70" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_Num8"
+                    android:layout_width="@dimen/size_sudokuNumBtn"
+                    android:layout_height="@dimen/size_sudokuNumBtn"
+                    android:fontFamily="@font/pt_mono"
+                    android:text="8"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimary__70"
+                    android:textSize="@dimen/font_size__h3"
+                    android:textStyle="bold"
+                    tools:layout_editor_absoluteX="184dp"
+                    tools:layout_editor_absoluteY="604dp" />
+
+                <View
+                    android:id="@+id/view4"
+                    android:layout_width="3dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimary__70" />
+
+                <Button
+                    android:id="@+id/btn_Num9"
+                    android:layout_width="@dimen/size_sudokuNumBtn"
+                    android:layout_height="@dimen/size_sudokuNumBtn"
+                    android:fontFamily="@font/pt_mono"
+                    android:text="9"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimary__70"
+                    android:textSize="@dimen/font_size__h3"
+                    android:textStyle="bold" />
+
+                <View
+                    android:id="@+id/view5"
+                    android:layout_width="3dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimary__70" />
+
+                <Button
+                    android:id="@+id/btn_NumA"
+                    android:layout_width="@dimen/size_sudokuNumBtn"
+                    android:layout_height="@dimen/size_sudokuNumBtn"
+                    android:fontFamily="@font/pt_mono"
+                    android:text="A"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimary__70"
+                    android:textSize="@dimen/font_size__h3"
+                    android:textStyle="bold" />
+
+                <View
+                    android:id="@+id/view6"
+                    android:layout_width="3dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimary__70" />
+
+                <Button
+                    android:id="@+id/btn_NumB"
+                    android:layout_width="@dimen/size_sudokuNumBtn"
+                    android:layout_height="@dimen/size_sudokuNumBtn"
+                    android:fontFamily="@font/pt_mono"
+                    android:text="B"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimary__70"
+                    android:textSize="@dimen/font_size__h3"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <View
+                android:id="@+id/view10"
+                android:layout_width="wrap_content"
+                android:layout_height="3dp"
+                android:background="@color/colorPrimary__70" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/btn_NumC"
+                    android:layout_width="@dimen/size_sudokuNumBtn"
+                    android:layout_height="@dimen/size_sudokuNumBtn"
+                    android:fontFamily="@font/pt_mono"
+                    android:text="C"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimary__70"
+                    android:textSize="@dimen/font_size__h3"
+                    android:textStyle="bold"
+                    tools:layout_editor_absoluteX="184dp"
+                    tools:layout_editor_absoluteY="604dp" />
+
+                <View
+                    android:id="@+id/view7"
+                    android:layout_width="3dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimary__70" />
+
+                <Button
+                    android:id="@+id/btn_NumD"
+                    android:layout_width="@dimen/size_sudokuNumBtn"
+                    android:layout_height="@dimen/size_sudokuNumBtn"
+                    android:fontFamily="@font/pt_mono"
+                    android:text="D"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimary__70"
+                    android:textSize="@dimen/font_size__h3"
+                    android:textStyle="bold" />
+
+                <View
+                    android:id="@+id/view9"
+                    android:layout_width="3dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimary__70" />
+
+                <Button
+                    android:id="@+id/btn_NumE"
+                    android:layout_width="@dimen/size_sudokuNumBtn"
+                    android:layout_height="@dimen/size_sudokuNumBtn"
+                    android:fontFamily="@font/pt_mono"
+                    android:text="E"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimary__70"
+                    android:textSize="@dimen/font_size__h3"
+                    android:textStyle="bold" />
+
+                <View
+                    android:id="@+id/view15"
+                    android:layout_width="3dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@color/colorPrimary__70" />
+
+                <Button
+                    android:id="@+id/btn_NumF"
+                    android:layout_width="@dimen/size_sudokuNumBtn"
+                    android:layout_height="@dimen/size_sudokuNumBtn"
+                    android:fontFamily="@font/pt_mono"
+                    android:text="F"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorPrimary__70"
+                    android:textSize="@dimen/font_size__h3"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+        </TableRow>
+
+    </TableLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/SudokuCursorControlContainer"
+        android:layout_width="129dp"
+        android:layout_height="129dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/sudokuPaper">
+
+        <Button
+            android:id="@+id/sudokuControlUp"
+            android:layout_width="@dimen/size_sudokuControlBtn"
+            android:layout_height="@dimen/size_sudokuControlBtn"
+            android:background="@drawable/border__normal__70"
+            android:fontFamily="@font/pt_mono"
+            android:text="h"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimary__70"
+            android:textSize="@dimen/font_size__h3"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/sudokuControlLeft"
+            android:layout_width="@dimen/size_sudokuControlBtn"
+            android:layout_height="@dimen/size_sudokuControlBtn"
+            android:background="@drawable/border__normal__70"
+            android:fontFamily="@font/pt_mono"
+            android:text="j"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimary__70"
+            android:textSize="@dimen/font_size__h3"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/sudokuControlRight"
+            android:layout_width="@dimen/size_sudokuControlBtn"
+            android:layout_height="@dimen/size_sudokuControlBtn"
+            android:background="@drawable/border__normal__70"
+            android:fontFamily="@font/pt_mono"
+            android:text="k"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimary__70"
+            android:textSize="@dimen/font_size__h3"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/sudokuControlDown"
+            android:layout_width="@dimen/size_sudokuControlBtn"
+            android:layout_height="@dimen/size_sudokuControlBtn"
+            android:background="@drawable/border__normal__70"
+            android:fontFamily="@font/pt_mono"
+            android:text="l"
+            android:textAlignment="center"
+            android:textColor="@color/colorPrimary__70"
+            android:textSize="@dimen/font_size__h3"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.494"
+            app:layout_constraintStart_toStartOf="parent" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

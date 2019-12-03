@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_history"
+    style="@style/appTheme"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    android:paddingLeft="@dimen/margin__2x"
+    android:paddingTop="@dimen/margin__3x"
+    android:paddingBottom="@dimen/margin__1x">
+
+    <LinearLayout
+        android:id="@+id/game_title_box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/game_title_0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pt_mono"
+            android:text="<Programer"
+            android:textColor="@color/colorPrimary__100"
+            android:textSize="@dimen/font_size__h1"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/game_title_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pt_mono"
+            android:text="Sudoku/>"
+            android:textColor="@color/colorPrimary__100"
+            android:textSize="@dimen/font_size__h2"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin__2x"
+        android:layout_marginTop="@dimen/margin__2x"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="@+id/game_title_box"
+        app:layout_constraintTop_toBottomOf="@+id/game_title_box">
+
+        <TextView
+            android:id="@+id/label_highest_score"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pt_mono"
+            android:text="<highest-score>"
+            android:textColor="@color/colorPrimary__50"
+            android:textSize="@dimen/font_size__h4"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:id="@+id/historyHightestScoreContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="@dimen/margin__2x">
+
+            <LinearLayout
+                android:id="@+id/historyDateContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/label_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pt_mono"
+                    android:text="<date>"
+                    android:textColor="@color/colorPrimary__50"
+                    android:textSize="@dimen/font_size__h4"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/text_recordDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pt_mono"
+                    android:paddingLeft="@dimen/margin__2x"
+                    android:text="null"
+                    android:textColor="@color/colorPrimary__70"
+                    android:textSize="@dimen/font_size__h4"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/label_date_end"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pt_mono"
+                    android:text="</date>"
+                    android:textColor="@color/colorPrimary__50"
+                    android:textSize="@dimen/font_size__h4"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/text_record"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/pt_mono"
+                android:text="INFINITY"
+                android:textColor="@color/colorPrimary__100"
+                android:textSize="@dimen/font_size__h4"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:id="@+id/historyCreatorContainer"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/label_creator"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pt_mono"
+                    android:text="<creator>"
+                    android:textColor="@color/colorPrimary__50"
+                    android:textSize="@dimen/font_size__h4"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/text_creator"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pt_mono"
+                    android:paddingLeft="@dimen/margin__2x"
+                    android:text="You"
+                    android:textColor="@color/colorPrimary__100"
+                    android:textSize="@dimen/font_size__h4"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/label_creator_end"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/pt_mono"
+                    android:text="</creator>"
+                    android:textColor="@color/colorPrimary__50"
+                    android:textSize="@dimen/font_size__h4"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/label_highest_score_end"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pt_mono"
+            android:text="</highest-score>"
+            android:textColor="@color/colorPrimary__50"
+            android:textSize="@dimen/font_size__h4"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_historyBack"
+        style="@style/button__lg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Back"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

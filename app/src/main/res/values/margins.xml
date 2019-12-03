@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin__1x">10dp</dimen>
+    <dimen name="margin__2x">20dp</dimen>
+    <dimen name="margin__3x">30dp</dimen>
+    <dimen name="margin__4x">40dp</dimen>
+    <dimen name="margin__5x">50dp</dimen>
+    <dimen name="margin__6x">60dp</dimen>
+    <dimen name="margin__7x">70dp</dimen>
+    <dimen name="margin__8x">80dp</dimen>
+</resources>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+<!--font sizes-->
+    <dimen name="font_size__h1">52sp</dimen>
+    <dimen name="font_size__h2">48sp</dimen>
+    <dimen name="font_size__h3">28sp</dimen>
+    <dimen name="font_size__h4">24sp</dimen>
+    <dimen name="font_size__h5">16sp</dimen>
+    <dimen name="font_size__body">14sp</dimen>
+
+<!--font weight-->
+    <integer name="font_weight__normal">400</integer>
+    <integer name="font_weight__bold">700</integer>
+</resources>

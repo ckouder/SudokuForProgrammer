@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorBackground">#000</color>
+    <color name="colorPrimary__100">#28FE14</color>
+    <color name="colorPrimary__70">#B328FE14</color>
+    <color name="colorPrimary__50">#8028FE14</color>
+    <color name="colorPrimary__30">#4D28FE14</color>
+    <color name="colorPrimary__20">#3328FE14</color>
+    <color name="colorAlart__100">#FFFF00</color>
+</resources>

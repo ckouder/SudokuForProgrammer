@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">SudokuForProgrammer</string>
+
+    <string name="game_quit">:\\q</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/appTheme"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorBackground"
+    android:paddingLeft="@dimen/margin__2x"
+    android:paddingTop="@dimen/margin__3x"
+    android:paddingBottom="@dimen/margin__7x"
+    tools:context=".MainActivity">
+
+    <LinearLayout
+        android:id="@+id/game_title_box"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/game_title_0"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pt_mono"
+            android:text="<Programer"
+            android:textColor="@color/colorPrimary__100"
+            android:textSize="@dimen/font_size__h1"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/game_title_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pt_mono"
+            android:text="Sudoku/>"
+            android:textColor="@color/colorPrimary__100"
+            android:textSize="@dimen/font_size__h2"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/mainMaximContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin__2x"
+        android:layout_marginEnd="@dimen/margin__4x"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/text_mainMaxim"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pt_mono"
+            android:lineSpacingExtra="4sp"
+            android:paddingBottom="@dimen/margin__2x"
+            android:text="&quot;I'm trying to write a super long quote that doesn't break down my layout. Obviously, it kinda works. &quot;"
+            android:textColor="@color/colorPrimary__70"
+            android:textSize="@dimen/font_size__h5"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/text_maximFrom"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/pt_mono"
+            android:text="by Game creator"
+            android:textAlignment="textEnd"
+            android:textColor="@color/colorPrimary__50"
+            android:textSize="@dimen/font_size__h5"
+            android:textStyle="bold|italic" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/mainButtonsContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/margin__4x"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <Button
+            android:id="@+id/btn_mainHistory"
+            style="@style/button__lg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="History"
+            android:textAlignment="textEnd"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btn_mainNewGame"
+            style="@style/button__lg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="New Game"
+            android:textAlignment="textEnd"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/btn_mainContinue"
+            style="@style/button__lg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Continue"
+            android:textAlignment="textEnd"
+            android:textStyle="bold" />
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
