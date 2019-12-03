@@ -59,6 +59,12 @@
         <item name="android:textSize">@dimen/font_size__body</item>
     </style>
 
+    <!--placeholder-->
+    <style name="placeholder">
+        <item name="android:width">3dp</item>
+        <item name="android:height">3dp</item>
+        <item name="android:background">@color/colorPrimary__100</item>
+    </style>
 
     <!--dialog theme-->
     <style name="dialog" parent="Theme.AppCompat.Dialog">
