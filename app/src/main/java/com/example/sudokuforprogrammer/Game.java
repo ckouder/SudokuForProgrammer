@@ -2,12 +2,13 @@ package com.example.sudokuforprogrammer;
 
 import java.util.Random;
 
+// A game is consisted of three grids, namely the answer grid, the user's grid, and temporary grid.
 public class Game {
 
     /** The difficulty of the game. */
     public final int DIFFICULTY = Constants.DIFFICULTY_EASY;
 
-    // @CHANGE
+    // TODO: Replace this answer grid with result from the generator.
     /** This is the answer to the puzzle. */
     public Grid answerGrid = Grid.importGridFromStringArray(new String[] {
             "A, C, 3, E, F, 2, 0, 1, B, 7, 9, 6, 4, 5, D, 8",
@@ -22,6 +23,7 @@ public class Game {
             "9, A, 6, 4, 5, D, B, 0, 3, F, 7, 1, C, 8, E, 2",
             "E, F, 1, 8, 7, 9, 2, 3, C, 4, D, A, 0, 6, B, 5",
             "2, 3, 0, 7, 1, C, F, 8, E, B, 6, 5, D, 9, A, 4",
+            "6, 1, A, 2, D, 5, 4, 9, 7, 8, 3, B, E, C, F, 0",
             "8, E, 4, F, 2, 1, 3, C, 0, 5, A, D, 7, B, 6, 9",
             "D, 0, B, 3, 6, F, 7, E, 9, C, 1, 2, 5, 4, 8, A",
             "5, 9, 7, C, 0, 8, A, B, 4, 6, F, E, 1, 3, 2, D"
@@ -62,10 +64,23 @@ public class Game {
             int column = random.nextInt(16);
             // If this is not an already removed cell
             if (this.temporaryGrid.cells[row][column].value != -1) {
+                // Store the value in case things don't work out well.
+                int savedValue = this.temporaryGrid.cells[row][column].value;
                 // Remove it, copy the change to puzzleGrid, and flip the flag
                 this.temporaryGrid.cells[row][column].value = -1;
+                this.temporaryGrid.cells[row][column].confirmed = false;
                 this.puzzleGrid.cells[row][column].value = -1;
-                done = true;
+                this.puzzleGrid.cells[row][column].confirmed = false;
+                if (Solver.solve(puzzleGrid, System.currentTimeMillis())) {
+                    // If it can be solved, done
+                    done = true;
+                } else {
+                    // Else revert back
+                    this.temporaryGrid.cells[row][column].value = savedValue;
+                    this.temporaryGrid.cells[row][column].confirmed = true;
+                    this.puzzleGrid.cells[row][column].value = savedValue;
+                    this.puzzleGrid.cells[row][column].confirmed = true;
+                }
             }
         }
     }
@@ -76,6 +91,8 @@ public class Game {
         Game newGame = new Game();
         newGame.initializePuzzleGrid();
         newGame.puzzleGrid.printGrid();
+        System.out.println("Final Puzzle!");
+        Solver.solve(newGame.puzzleGrid, System.currentTimeMillis());
     }
 
 }

@@ -360,18 +360,28 @@ public class Solver {
     }
 
     /**
-     * A method to solve the puzzle by repeating steps
+     * A method to solve the puzzle by repeating steps.
+     * It is important to create another copy and not damage the data.
      * @param grid the puzzle grid to solve
+     * @param startTime the time of which the solving process starts
+     * @return whether the puzzle is solved within time (whether it is solvable)
      */
-    public static void solve(Grid grid) {
-        while (!grid.isSolved()) {
+    public static boolean solve(Grid grid, long startTime) {
+        Grid toSolve = grid.clone();
+        while (!toSolve.isSolved()
+                && System.currentTimeMillis() - startTime <= Constants.SOLVE_TIME_LIMIT) {
             // Initialize it at the beginning
-            Solver.updatePossibilities(grid);
+            Solver.updatePossibilities(toSolve);
             // Solve it for one step
-            Solver.step(grid);
+            Solver.step(toSolve);
             // Print it again
-            grid.printGrid();
+            toSolve.printGrid();
         }
+        if (toSolve.isSolved()) {
+            System.out.println("Grid is solved in "
+                    + (System.currentTimeMillis() - startTime) + "ms.");
+        }
+        return toSolve.isSolved();
     }
 
     /*
