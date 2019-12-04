@@ -1,5 +1,6 @@
 package com.example.sudokuforprogrammer;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,8 +13,6 @@ public class NewGameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
-        
-
         setContentView(R.layout.activity_game);
 
     }
