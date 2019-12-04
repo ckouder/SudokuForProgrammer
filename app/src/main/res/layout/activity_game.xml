@@ -94,28 +94,32 @@
             android:paddingTop="1.5dp">
 
             <fragment
-                android:id="@+id/fragment"
+                android:id="@+id/fragment1"
                 android:name="com.example.sudokuforprogrammer.sudokuBlock"
                 android:layout_width="83.2dp"
-                android:layout_height="83.2dp" />
+                android:layout_height="83.2dp"
+                tools:layout="@layout/fragment_sudoku_block" />
 
             <fragment
                 android:id="@+id/fragment2"
                 android:name="com.example.sudokuforprogrammer.sudokuBlock"
                 android:layout_width="83.2dp"
-                android:layout_height="83.2dp" />
+                android:layout_height="83.2dp"
+                tools:layout="@layout/fragment_sudoku_block" />
 
             <fragment
                 android:id="@+id/fragment3"
                 android:name="com.example.sudokuforprogrammer.sudokuBlock"
                 android:layout_width="83.2dp"
-                android:layout_height="83.2dp" />
+                android:layout_height="83.2dp"
+                tools:layout="@layout/fragment_sudoku_block" />
 
             <fragment
                 android:id="@+id/fragment4"
                 android:name="com.example.sudokuforprogrammer.sudokuBlock"
                 android:layout_width="83.2dp"
-                android:layout_height="83.2dp" />
+                android:layout_height="83.2dp"
+                tools:layout="@layout/fragment_sudoku_block" />
         </TableRow>
 
         <TableRow
@@ -128,25 +132,29 @@
                 android:id="@+id/fragmen5"
                 android:name="com.example.sudokuforprogrammer.sudokuBlock"
                 android:layout_width="83.2dp"
-                android:layout_height="83.2dp" />
+                android:layout_height="83.2dp"
+                tools:layout="@layout/fragment_sudoku_block" />
 
             <fragment
                 android:id="@+id/fragment6"
                 android:name="com.example.sudokuforprogrammer.sudokuBlock"
                 android:layout_width="83.2dp"
-                android:layout_height="83.2dp" />
+                android:layout_height="83.2dp"
+                tools:layout="@layout/fragment_sudoku_block" />
 
             <fragment
                 android:id="@+id/fragment7"
                 android:name="com.example.sudokuforprogrammer.sudokuBlock"
                 android:layout_width="83.2dp"
-                android:layout_height="83.2dp" />
+                android:layout_height="83.2dp"
+                tools:layout="@layout/fragment_sudoku_block" />
 
             <fragment
                 android:id="@+id/fragment8"
                 android:name="com.example.sudokuforprogrammer.sudokuBlock"
                 android:layout_width="83.2dp"
-                android:layout_height="83.2dp" />
+                android:layout_height="83.2dp"
+                tools:layout="@layout/fragment_sudoku_block" />
         </TableRow>
 
         <TableRow
@@ -159,25 +167,29 @@
                 android:id="@+id/fragment9"
                 android:name="com.example.sudokuforprogrammer.sudokuBlock"
                 android:layout_width="83.2dp"
-                android:layout_height="83.2dp" />
+                android:layout_height="83.2dp"
+                tools:layout="@layout/fragment_sudoku_block" />
 
             <fragment
                 android:id="@+id/fragment10"
                 android:name="com.example.sudokuforprogrammer.sudokuBlock"
                 android:layout_width="83.2dp"
-                android:layout_height="83.2dp" />
+                android:layout_height="83.2dp"
+                tools:layout="@layout/fragment_sudoku_block" />
 
             <fragment
                 android:id="@+id/fragment11"
                 android:name="com.example.sudokuforprogrammer.sudokuBlock"
                 android:layout_width="83.2dp"
-                android:layout_height="83.2dp" />
+                android:layout_height="83.2dp"
+                tools:layout="@layout/fragment_sudoku_block" />
 
             <fragment
                 android:id="@+id/fragment12"
                 android:name="com.example.sudokuforprogrammer.sudokuBlock"
                 android:layout_width="83.2dp"
-                android:layout_height="83.2dp" />
+                android:layout_height="83.2dp"
+                tools:layout="@layout/fragment_sudoku_block" />
         </TableRow>
 
         <TableRow
@@ -190,25 +202,29 @@
                 android:id="@+id/fragment13"
                 android:name="com.example.sudokuforprogrammer.sudokuBlock"
                 android:layout_width="83.2dp"
-                android:layout_height="83.2dp" />
+                android:layout_height="83.2dp"
+                tools:layout="@layout/fragment_sudoku_block" />
 
             <fragment
                 android:id="@+id/fragment14"
                 android:name="com.example.sudokuforprogrammer.sudokuBlock"
                 android:layout_width="83.2dp"
-                android:layout_height="83.2dp" />
+                android:layout_height="83.2dp"
+                tools:layout="@layout/fragment_sudoku_block" />
 
             <fragment
                 android:id="@+id/fragment15"
                 android:name="com.example.sudokuforprogrammer.sudokuBlock"
                 android:layout_width="83.2dp"
-                android:layout_height="83.2dp" />
+                android:layout_height="83.2dp"
+                tools:layout="@layout/fragment_sudoku_block" />
 
             <fragment
                 android:id="@+id/fragment16"
                 android:name="com.example.sudokuforprogrammer.sudokuBlock"
                 android:layout_width="83.2dp"
-                android:layout_height="83.2dp" />
+                android:layout_height="83.2dp"
+                tools:layout="@layout/fragment_sudoku_block" />
         </TableRow>
 
     </TableLayout>
