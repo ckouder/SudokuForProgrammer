@@ -51,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(historyActivity);
         });
 
+<<<<<<< HEAD
         renderQuote();
     }
 
@@ -97,5 +98,15 @@ public class MainActivity extends AppCompatActivity {
         } else {
             return rawString;
         }
+=======
+        // Process of initiating a new game
+        Button newGameButton = findViewById(R.id.btn_mainNewGame);
+        newGameButton.setOnClickListener(v -> {
+            Intent newGameActivity = new Intent(this, NewGameActivity.class);
+            // @CHANGE
+            newGameActivity.putExtra("difficulty", 36);
+            startActivity(newGameActivity);
+        });
+>>>>>>> 8e28116230bea8080918711951f0f8a3865e8d08
     }
 }
