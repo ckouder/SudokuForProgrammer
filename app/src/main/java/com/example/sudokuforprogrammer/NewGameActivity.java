@@ -7,13 +7,18 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-public class NewGameActivity extends AppCompatActivity {
+public class NewGameActivity extends AppCompatActivity
+        implements SudokuBlock.OnFragmentInteractionListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game);
+
+    }
+
+    public void onFragmentInteraction(Uri uri) {
 
     }
 }
