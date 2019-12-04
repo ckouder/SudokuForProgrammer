@@ -30,5 +30,14 @@ public class MainActivity extends AppCompatActivity {
             Intent historyActivity = new Intent(this, HistoryActivity.class);
             startActivity(historyActivity);
         });
+
+        // Process of initiating a new game
+        Button newGameButton = findViewById(R.id.btn_mainNewGame);
+        newGameButton.setOnClickListener(v -> {
+            Intent newGameActivity = new Intent(this, NewGameActivity.class);
+            // @CHANGE
+            newGameActivity.putExtra("difficulty", 36);
+            startActivity(newGameActivity);
+        });
     }
 }
