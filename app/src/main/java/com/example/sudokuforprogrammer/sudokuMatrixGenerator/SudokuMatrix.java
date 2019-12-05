@@ -73,6 +73,13 @@ public class SudokuMatrix {
         initialize();
     }
 
+    /**
+     * Initialise a SudokuMatrix with given tokens.
+     *
+     * @param setBlockSize unit block size of the matrix
+     * @param tokenList list of tokens used as sudoku tokens
+     * @throws Exception if block size is too big
+     */
     SudokuMatrix(final int setBlockSize, final char[] tokenList) throws Exception {
         if (setBlockSize > 16) {
             throw new Exception("block size [" + setBlockSize + "] is too large");
