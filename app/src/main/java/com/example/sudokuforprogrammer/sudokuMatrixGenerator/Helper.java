@@ -2,7 +2,7 @@ package com.example.sudokuforprogrammer.sudokuMatrixGenerator;
 
 import java.util.Random;
 
-public class Helper {
+class Helper {
     Helper() { }
 
     static char[] randomize(final char[] l) {

@@ -121,7 +121,7 @@ public class SudokuMatrix {
     /**
      * initialize a sudoku matrix with given tokens and fill it up.
      */
-    void initialize() {
+    private void initialize() {
 
         // initizalize paper with placeholder tokens
         paper = new char[size][size];
@@ -294,26 +294,22 @@ public class SudokuMatrix {
                     "No available slot before [" + coordinate[1] + ", " + coordinate[0] + "].");
         }
 
-        int[] c = coordinate;
-
         // System.out.println("Finding previous slot for: " + c[1] + ", " + c[0]);
-        while (true) {
-            if (c[0] == 0 && c[1] > 0) {
-                c[0] = size - 1;
-                c[1] -= 1;
+        do {
+            if (coordinate[0] == 0 && coordinate[1] > 0) {
+                coordinate[0] = size - 1;
+                coordinate[1] -= 1;
             }
 
-            else if (c[1] >= 0) {
-                c[0] -= 1;
+            else if (coordinate[1] >= 0) {
+                coordinate[0] -= 1;
             }
-            if (posOutOfBlock(c)) {
-                break;
-            }
-        }
+
+        } while (!posOutOfBlock(coordinate));
 
         // System.out.println("Found previous slot: " + c[1] + ", " + c[0] + "\n");
 
-        return c;
+        return coordinate;
     }
 
     /**
@@ -329,23 +325,20 @@ public class SudokuMatrix {
                     "No available slot after [" + coordinate[1] + ", " + coordinate[0] + "].");
         }
 
-        int[] c = coordinate;
-        while (true) {
-            if (c[0] == size - 1 && c[1] < size - 1) {
-                c[0] = 0;
-                c[1] += 1;
+
+        do {
+            if (coordinate[0] == size - 1 && coordinate[1] < size - 1) {
+                coordinate[0] = 0;
+                coordinate[1] += 1;
             }
 
-            else if (c[1] <= size - 1) {
-                c[0] += 1;
+            else if (coordinate[1] <= size - 1) {
+                coordinate[0] += 1;
             }
 
-            if (posOutOfBlock(c)) {
-                break;
-            }
-        }
+        } while (!posOutOfBlock(coordinate));
 
-        return c;
+        return coordinate;
     }
 
     /**

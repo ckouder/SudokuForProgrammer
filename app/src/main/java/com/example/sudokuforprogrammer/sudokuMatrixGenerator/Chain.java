@@ -11,7 +11,7 @@ public class Chain<E> {
     /**
      * internal class of chain to store what ever you want.
      */
-    public class Ring {
+    class Ring {
 
         /** Give an id to value you want to store. */
         private final String id;
@@ -39,14 +39,14 @@ public class Chain<E> {
         /**
          * Get id of the ring.
          */
-        public String getId() {
+        String getId() {
             return id;
         }
 
         /**
          * Get value of the ring.
          */
-        public E getValue() {
+        E getValue() {
             return value;
         }
 
@@ -55,7 +55,7 @@ public class Chain<E> {
          *
          * @param setValue value you want to store.
          */
-        public void setValue(final E setValue) {
+        void setValue(final E setValue) {
             value = setValue;
         }
 
@@ -64,7 +64,7 @@ public class Chain<E> {
          *
          * @return previous ring
          */
-        public Ring getPrevious() {
+        Ring getPrevious() {
             return previous;
         }
 
@@ -73,7 +73,7 @@ public class Chain<E> {
          *
          * @param setPrevious Ring you want to be the previous one.
          */
-        public void setPrevious(final Ring setPrevious) {
+        void setPrevious(final Ring setPrevious) {
             previous = setPrevious;
         }
     }
@@ -89,7 +89,7 @@ public class Chain<E> {
      *
      * @return root
      */
-    public Ring getRoot() {
+    Ring getRoot() {
         return root;
     }
 
@@ -98,7 +98,7 @@ public class Chain<E> {
      *
      * @param setRoot root Ring you want to be
      */
-    public void setRoot(Ring setRoot) {
+    void setRoot(Ring setRoot) {
         root = setRoot;
     }
 
@@ -109,7 +109,7 @@ public class Chain<E> {
      * @param value value you want to store
      * @return Ring itself
      */
-    public Ring add(final String id, final E value) {
+    Ring add(final String id, final E value) {
 
         Ring ring = new Ring(id, value, root);
         root = ring;
@@ -139,11 +139,14 @@ public class Chain<E> {
      * @param id id of the ring
      * @return Ring if found, null if not
      */
-    public Ring getById(final String id) {
+    Ring getById(final String id) {
         return getFromId(root, id);
     }
 
 
+    /**
+     * If you fucked up, use this to debug
+     */
     public void printStack() {
         Ring current = root;
 
