@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    tools:context=".sudokuBlock">
+    tools:context=".SudokuBlock">
 
     <TableRow
         android:layout_width="wrap_content"
@@ -30,7 +30,6 @@
                     android:layout_width="@dimen/size_sudokuUnit"
                     android:layout_height="@dimen/size_sudokuUnit"
                     android:fontFamily="@font/pt_mono"
-                    android:text="F"
                     android:textAlignment="center"
                     android:textColor="@color/colorPrimary__100"
                     android:textSize="@dimen/font_size__h5"

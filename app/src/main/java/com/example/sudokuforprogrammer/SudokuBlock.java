@@ -14,12 +14,12 @@ import android.view.ViewGroup;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link sudokuBlock.OnFragmentInteractionListener} interface
+ * {@link SudokuBlock.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link sudokuBlock#newInstance} factory method to
+ * Use the {@link SudokuBlock#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class sudokuBlock extends Fragment {
+public class SudokuBlock extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -31,7 +31,7 @@ public class sudokuBlock extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public sudokuBlock() {
+    public SudokuBlock() {
         // Required empty public constructor
     }
 
@@ -41,11 +41,11 @@ public class sudokuBlock extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment sudokuBlock.
+     * @return A new instance of fragment SudokuBlock.
      */
     // TODO: Rename and change types and number of parameters
-    public static sudokuBlock newInstance(String param1, String param2) {
-        sudokuBlock fragment = new sudokuBlock();
+    public static SudokuBlock newInstance(String param1, String param2) {
+        SudokuBlock fragment = new SudokuBlock();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
