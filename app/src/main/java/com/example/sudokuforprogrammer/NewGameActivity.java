@@ -18,6 +18,7 @@ import org.w3c.dom.Text;
 public class NewGameActivity extends AppCompatActivity
         implements SudokuBlock.OnFragmentInteractionListener {
 
+    /** The game object. */
     public Game game;
 
     /** pointer that stored [int row, int col] pair. */
@@ -33,10 +34,7 @@ public class NewGameActivity extends AppCompatActivity
 
         // Initialize a new game
         this.game = new Game();
-        game.initializeAnswerGrid();
-        game.initializePuzzleGrid();
         setEventListenerForNumberButtons();
-
 
         // Update UI
         renderGrid();
@@ -101,7 +99,7 @@ public class NewGameActivity extends AppCompatActivity
 
     /**
      * This is what happens when a 0~F button is clicked.
-     * @param option
+     * @param option the value displayed on the button
      */
     public void buttonAction(String option) {
         // Fetch pointer and option values
@@ -117,11 +115,10 @@ public class NewGameActivity extends AppCompatActivity
             renderGrid();
         }
         // Else… Do nothing for the moment being
+        // TODO: Add some code if the player makes a mistake.
     }
 
-    /**
-     * Is in charge of render the grid based on this.game.temporary grid.
-     */
+    /** Renders the grid with player's current progress. */
     public void renderGrid() {
 
         TableLayout gridUI = findViewById(R.id.sudokuPaper);
@@ -138,7 +135,6 @@ public class NewGameActivity extends AppCompatActivity
                     int value = blockValues[k].value;
 
                     TextView sudokuUnit = (TextView) block.findViewById(id);
-//                    System.out.println(block);
 
                     if (value == -1) {
                         sudokuUnit.setText("");

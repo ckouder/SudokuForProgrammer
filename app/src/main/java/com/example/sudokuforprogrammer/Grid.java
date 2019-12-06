@@ -8,10 +8,10 @@ public class Grid implements Cloneable {
     /** A class to encapsulate one Sudoku cell. */
     public class Cell {
 
-        /** Number value of the cell. */
+        /** Numerical value of the cell. */
         public int value;
 
-        /** Whether the cell has been confirmed. Cells came with the problem are confirmed. */
+        /** Whether the cell has been confirmed. Cells with definite value are confirmed. */
         public boolean confirmed;
 
         /** The possibilities that an empty cell possesses. */
@@ -43,19 +43,19 @@ public class Grid implements Cloneable {
     }
 
     /** Cells in a Sudoku grid. */
-    // This configuration is for 16x16 Sudoku specifically.
+    // This configuration is for 16x16 Sudoku specifically
     public Cell[][] cells = new Cell[16][16];
 
-    /** Base index of the game. */
-    // This configuration is for 16x16 Sudoku specifically.
-    public final int BASE_INDEX = 4;
+    /** Base index (side length of a block) of the game. */
+    // This configuration is for 16x16 Sudoku specifically
+    public static final int BASE_INDEX = 4;
 
-    /** Dimension of the game. */
-    public final int DIMENSION = BASE_INDEX * BASE_INDEX;
+    /** Dimension (side length of a grid) of the game. */
+    public static final int DIMENSION = BASE_INDEX * BASE_INDEX;
 
     /**
-     * A constructor for cells with input array.
-     * @param array input array representing the Sudoku grid
+     * A constructor for grid with a 2-D int input array.
+     * @param array input array containing numerical values for each cell.
      */
     public Grid(int[][] array) {
         for (int i = 0; i < this.DIMENSION; i++) {
@@ -66,15 +66,14 @@ public class Grid implements Cloneable {
     }
 
     /**
-     * Create a grid from the given String array
+     * Create a grid from the given String array.
      * @param rawArray the raw String array
      */
     public static Grid importGridFromStringArray(String[] rawArray) {
-        // Specifically set for 16x16 Sudoku
         // This will be used as a parameter to another constructor
-        int[][] array = new int[16][16];
+        int[][] array = new int[DIMENSION][DIMENSION];
         for (int i = 0; i < rawArray.length; i++) {
-            int[] processed = new int[16];
+            int[] processed = new int[DIMENSION];
             // A single row in a puzzle
             String[] raw = rawArray[i].split(",");
             for (int j = 0; j < raw.length; j++) {
@@ -82,7 +81,7 @@ public class Grid implements Cloneable {
                 if (raw[j].trim().equals(".")) {
                     processed[j] = -1;
                 } else {
-                    processed[j] = Integer.parseInt(raw[j].trim(), 16);
+                    processed[j] = Integer.parseInt(raw[j].trim(), DIMENSION);
                 }
             }
             array[i] = processed;
@@ -90,7 +89,7 @@ public class Grid implements Cloneable {
         return new Grid(array);
     }
 
-    /** A method to view the grid. */
+    /** A method to print the grid. */
     public void printGrid() {
         for (int i = 0; i < this.DIMENSION; i++) {
             System.out.print("[");
@@ -131,79 +130,64 @@ public class Grid implements Cloneable {
     }
 
     /**
-     * get a line in grid.
-     *
+     * Get a line in grid.
      * @param pos position of the line
      * @param vertical if the line is vertical
      * @return cells in the grid
      */
-    public Cell[] getLine(int pos, boolean vertical) {
+    public Cell[] getRow(int pos, boolean vertical) {
         Cell[] line = new Cell[DIMENSION];
-
         if (vertical) {
             for (int i = 0; i < DIMENSION; i++) {
                 line[i] = cells[i][pos];
             }
-
         } else {
             line = cells[pos];
         }
-
         return line;
     }
 
     /**
-     * get a block in the grid.
-     *
+     * Get a block in the grid.
      * @param coordinate [int row, int col] pair
      * @return cells in a block
      */
     public Cell[] getBlock(int[] coordinate) {
         final Cell[] block = new Cell[DIMENSION];
-
         int j = 0;
         for (int row = coordinate[0] * BASE_INDEX; row < (coordinate[0] + 1) * BASE_INDEX; row++) {
-
             for (int col = coordinate[1] * BASE_INDEX; col < (coordinate[1] + 1) * BASE_INDEX; col++) {
-
                 block[j] = cells[row][col];
                 j++;
             }
-
         }
-
         return block;
     }
 
     /**
-     * set a block.
-     *
-     * @param values values you want to add to grid.
+     * Set a block.
+     * @param values values you want to add to grid
      * @param coordinate coordinate of the cell
      */
     public void setBlock(Cell[] values, int[] coordinate) {
-        int j = 0;
-
+        int index = 0;
         for (int i = coordinate[0] * BASE_INDEX; i < (coordinate[0] + 1) * BASE_INDEX; i++) {
-
-            for (int k = coordinate[1] * BASE_INDEX; k < (coordinate[1] + 1) * BASE_INDEX; k++) {
-
-                cells[i][k] = values[j];
-                j++;
+            for (int j = coordinate[1] * BASE_INDEX; j < (coordinate[1] + 1) * BASE_INDEX; j++) {
+                cells[i][j] = values[index++];
             }
         }
     }
 
     /**
-     * Make a deep copy of the current grid. The idea is to initialize another grid with an
-     * int 2-dimensional array.
+     * Make a deep copy of the current grid. The idea is to initialize another grid with a 2-D
+     * int array.
      * @return a copy of the grid
      */
     @Override
     protected Grid clone() {
-        int[][] array = new int[16][16];
-        for (int i = 0; i < 16; i++) {
-            for (int j = 0; j < 16; j++) {
+        int[][] array = new int[DIMENSION][DIMENSION];
+        for (int i = 0; i < DIMENSION; i++) {
+            for (int j = 0; j < DIMENSION; j++) {
                 array[i][j] = this.cells[i][j].value;
             }
         }

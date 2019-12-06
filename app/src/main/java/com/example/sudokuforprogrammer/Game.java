@@ -3,7 +3,13 @@ package com.example.sudokuforprogrammer;
 import java.util.Random;
 import com.example.sudokuforprogrammer.sudokuMatrixGenerator.SudokuMatrix;
 
-// A game is consisted of three grids, namely the answer grid, the user's grid, and temporary grid.
+/**
+ * The structure of a game is as follows:
+ * 1. Difficulty: Will be set to easy, because it's already pretty hard.
+ * 2. Answer Grid: The answer to the puzzle, will not change after being initialized.
+ * 3. Temporary Grid: The grid that the user is currently working on.
+ * 4. Puzzle Grid: The puzzle that is presented to the user at the beginning of the game.
+ */
 public class Game {
 
     /** The difficulty of the game. */
@@ -12,47 +18,43 @@ public class Game {
     /** This is the answer to the puzzle. */
     public Grid answerGrid;
 
-    /**
-     * This is a temporary grid to obtain the puzzle grid.
-     * This will change along as the user plays.
-     */
+    /** This grid starts being the same as puzzle grid, but will change as the player plays. */
     public Grid temporaryGrid;
 
-    /**
-     * This is the puzzleGrid that we are trying to create.
-     * It will then be sent to render, and this will stay the same after the
-     * game is created.
-     */
+    /** The initial state of the game, will not change. */
     public Grid puzzleGrid;
 
-    /**
-     * Originally all the three grids are completed puzzles, initialize them to
-     * get puzzle grids.
-     */
-    public void initializePuzzleGrid() {
-        this.puzzleGrid = answerGrid.clone();
-        this.temporaryGrid = answerGrid.clone();
-        while (this.puzzleGrid.getNumberOfEmptyCells() < this.DIFFICULTY) {
-            takeARandomCellOut();
-        }
-    }
-
-    /** Initialize an answer grid from the sudoku grid generator. */
-    public void initializeAnswerGrid() {
+    /** Constructing a game object. */
+    public Game() {
+        // Token used for grid generation
+        char[] token = {
+                '0', '1', '2', '3',
+                '4', '5', '6', '7',
+                '8', '9', 'A', 'B',
+                'C', 'D', 'E', 'F'
+        };
         try {
-            // Token used for grid generation
-            char[] token = {
-                    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'
-            };
             // Store the generated Sudoku grid as a 2-D array of char
             char[][] charGrid = new SudokuMatrix(4, token).getPaper();
-            // Turn that 2-D char array
+            // Turn that 2-D char array into a new grid
             this.answerGrid = new Grid(charGridToIntGrid(charGrid));
+            // Initialize the puzzle grid
+            this.puzzleGrid = this.answerGrid.clone();
+            this.temporaryGrid = this.answerGrid.clone();
+            while (this.puzzleGrid.getNumberOfEmptyCells() < this.DIFFICULTY) {
+                takeARandomCellOut();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
+    /**
+     * Auxiliary function that convert a 2-D char array into a 2-D int array.
+     * @param charGrid 2-D char array representing the grid
+     * @return 2-D int array representing the grid
+     */
     private int[][] charGridToIntGrid(char[][] charGrid) {
         int[][] intGrid = new int[16][16];
         for (int i = 0; i < charGrid.length; i++) {
@@ -63,7 +65,10 @@ public class Game {
         return intGrid;
     }
 
-    /** Auxiliary function. */
+    /**
+     * Auxiliary function that generates a puzzle grid from an answer grid by taking random cells
+     * out one at a time.
+     */
     private void takeARandomCellOut() {
         Random random = new Random();
         // Flag for whether the removal action is done.
@@ -71,7 +76,7 @@ public class Game {
         while (!done) {
             int row = random.nextInt(16);
             int column = random.nextInt(16);
-            // If this is not an already removed cell
+            // If this is not an empty cell
             if (this.temporaryGrid.cells[row][column].value != -1) {
                 // Store the value in case things don't work out well.
                 int savedValue = this.temporaryGrid.cells[row][column].value;
@@ -94,12 +99,12 @@ public class Game {
         }
     }
 
+    /**
+     * Main function to test the game object internally.
+     * @param args useless
+     */
     public static void main(String[] args) {
-        // @CHANGE
-        // TODO: Write a constructor for Game.
         Game newGame = new Game();
-        newGame.initializeAnswerGrid();
-        newGame.initializePuzzleGrid();
         newGame.puzzleGrid.printGrid();
         System.out.println("Final Puzzle!");
         Solver.solve(newGame.puzzleGrid, System.currentTimeMillis());
