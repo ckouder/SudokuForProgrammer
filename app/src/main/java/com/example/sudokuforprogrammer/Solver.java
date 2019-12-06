@@ -5,9 +5,13 @@ import java.util.ArrayList;
 import java.io.File;
 import java.io.FileNotFoundException;
 
-// A solver for Sudoku puzzle, the main bulk of the code is here.
-// Compile it and run it with javac and java.
+/** A solver for Sudoku puzzle. */
 public class Solver {
+
+    /** Privatize constructor. */
+    private Solver() {
+
+    }
 
     /**
      * Import a Sudoku puzzle from file.
@@ -163,10 +167,7 @@ public class Solver {
                 // Condition for confirmation
                 if (cell.possibilities.size() == 1) {
                     // If the cell only has one possibility (Naked Single Theorem)
-                    cell.value = cell.possibilities.get(0);
-                    cell.confirmed = true;
-                    cell.possibilities = null;
-
+                    confirmCell(grid, cell, cell.possibilities.get(0));
                     // @DEBUG
                     System.out.printf("Naked single of %s at R%sC%sB%s (from 0)\n",
                             Integer.toHexString(cell.value),
@@ -174,13 +175,6 @@ public class Solver {
                             Integer.toHexString(cell.column),
                             Integer.toHexString(cell.block));
                     // @DEBUG END
-
-                    // CRITICAL! Every time you update a cell, remove possibilities in cells
-                    // in the same row, column, and block! If not this will cause a problem for
-                    // hidden single checks!
-                    removePossibilityInRow(grid, cell.row, cell.value);
-                    removePossibilityInColumn(grid, cell.column, cell.value);
-                    removePossibilityInBlock(grid, cell.block, cell.value);
                 } else if (cell.possibilities.size() == 0) {
                     System.out.printf("Cell (%s, %s) has no solution.\n",
                             Integer.toHexString(i),
@@ -198,9 +192,7 @@ public class Solver {
                                 || Solver.hiddenSingleInColumn(grid, cell, possibility)
                                 || Solver.hiddenSingleInBlock(grid, cell, possibility))
                                 && possibleToAdd(grid, cell, possibility)) {
-                            cell.value = possibility;
-                            cell.confirmed = true;
-                            cell.possibilities = null;
+                            confirmCell(grid, cell, possibility);
                             // @DEBUG
                             System.out.printf("Hidden single of %s at R%sC%sB%s (from 0)\n",
                                     Integer.toHexString(cell.value),
@@ -208,12 +200,6 @@ public class Solver {
                                     Integer.toHexString(cell.column),
                                     Integer.toHexString(cell.block));
                             // @DEBUG END
-                            // CRITICAL! Every time you update a cell, remove possibilities in
-                            // cells in the same row, column, and block! If not this will cause
-                            // problems!
-                            removePossibilityInRow(grid, cell.row, cell.value);
-                            removePossibilityInColumn(grid, cell.column, cell.value);
-                            removePossibilityInBlock(grid, cell.block, cell.value);
                             break;
                         }
                     }
@@ -384,20 +370,21 @@ public class Solver {
         return toSolve.isSolved();
     }
 
-    /*
-    public static void main(String[] args) {
-        long start = System.currentTimeMillis();
-        try {
-            Grid grid;
-            grid = importPuzzleFromFile("sudoku.txt");
-            grid.printGrid();
-            Solver.solve(grid);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        long end = System.currentTimeMillis();
-        System.out.println("Run Time: " + (end - start) + "ms");
+    /**
+     * Action performed when a cell is confirmed.
+     * @param grid the grid to operate on
+     * @param cell the cell to operate on
+     * @param value the numerical value of the cell
+     */
+    public static void confirmCell(Grid grid, Grid.Cell cell, int value) {
+        cell.value = value;
+        cell.confirmed = true;
+        cell.possibilities = null;
+        // CRITICAL! Every time you update a cell, remove possibilities in cells in the same row,
+        // column, and block! If not this will cause problems!
+        removePossibilityInRow(grid, cell.row, cell.value);
+        removePossibilityInColumn(grid, cell.column, cell.value);
+        removePossibilityInBlock(grid, cell.block, cell.value);
     }
-    */
 
 }

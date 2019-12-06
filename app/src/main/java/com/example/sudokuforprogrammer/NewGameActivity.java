@@ -110,7 +110,7 @@ public class NewGameActivity extends AppCompatActivity
         if ((game.temporaryGrid.cells[row][column].value == -1
                 && number == game.answerGrid.cells[row][column].value)) {
             // Change temporary grid
-            game.temporaryGrid.cells[row][column].value = number;
+            Solver.confirmCell(game.temporaryGrid, game.temporaryGrid.cells[row][column], number);
             // Reflect the update on UI
             renderGrid();
         }
