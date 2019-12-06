@@ -3,19 +3,13 @@ package com.example.sudokuforprogrammer.sudokuMatrixGenerator;
 import java.util.ArrayList;
 import java.util.Random;
 
-/**
- * generate a sudoku matrix
- */
+/** Generates a sudoku grid. */
 public class SudokuMatrix {
 
-    /**
-     * throw no available slot exception when cannot visit previous. or next slot
-     */
+    /** Throw no available slot exception when cannot visit the previous or the next slot. */
     private class NoAvailableSlotException extends Exception {
-
         /**
-         * No available slot exception
-         * 
+         * No available slot exception.
          * @param string message
          */
         NoAvailableSlotException(String string) {
@@ -23,9 +17,7 @@ public class SudokuMatrix {
         }
     }
 
-    /**
-     * Initialization limit for the matrix, will reinitialize if surpass the limit.
-     */
+    /** Initialization limit for the matrix, will reinitialize if surpass the limit. */
     private static final int INITIALIZATION_LIMIT = 1000000;
 
     /** ASCII code start point for tokens, default 'A'. */
@@ -59,23 +51,19 @@ public class SudokuMatrix {
         if (setBlockSize > 16) {
             throw new Exception("block size [" + setBlockSize + "] is too large");
         }
-
         blockSize = setBlockSize;
         size = (int) Math.pow(blockSize, 2);
         tokens = new char[size];
-
         // fill up tokens list
         for (int i = 0; i < size; i++) {
             final char token = (char) (i + TOKEN_START_POINT);
             tokens[i] = token;
         }
-
         initialize();
     }
 
     /**
      * Initialise a SudokuMatrix with given tokens.
-     *
      * @param setBlockSize unit block size of the matrix
      * @param tokenList list of tokens used as sudoku tokens
      * @throws Exception if block size is too big
@@ -119,24 +107,24 @@ public class SudokuMatrix {
         return integerPaper;
     }
 
+    /**
+     * Implement +toString(): String so that the matrix can be displayed.
+     * @return String representation of the matrix
+     */
     @Override
     public String toString() {
-        StringBuilder s = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
 
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                s.append(paper[i][j]);
-                s.append(" ");
+                sb.append(paper[i][j] + " ");
             }
-            s.append("\n");
+            sb.append("\n");
         }
-
-        return s.toString();
+        return sb.toString();
     }
 
-    /**
-     * initialize a sudoku matrix with given tokens and fill it up.
-     */
+    /** Initialize a sudoku matrix with given tokens and fill it up. */
     private void initialize() {
 
         // initizalize paper with placeholder tokens

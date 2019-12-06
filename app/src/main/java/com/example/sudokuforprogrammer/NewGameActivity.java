@@ -2,18 +2,13 @@ package com.example.sudokuforprogrammer;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-
-import org.w3c.dom.Text;
 
 public class NewGameActivity extends AppCompatActivity
         implements SudokuBlock.OnFragmentInteractionListener {
@@ -107,10 +102,10 @@ public class NewGameActivity extends AppCompatActivity
         int column = pointer[1];
         int number = Integer.parseInt(option, 16);
         // If this is an empty cell and it is the right number indeed…
-        if ((game.temporaryGrid.cells[row][column].value == -1
+        if ((game.puzzleGrid.cells[row][column].value == -1
                 && number == game.answerGrid.cells[row][column].value)) {
-            // Change temporary grid
-            Solver.confirmCell(game.temporaryGrid, game.temporaryGrid.cells[row][column], number);
+            // Update puzzle grid
+            Solver.confirmCell(game.puzzleGrid, game.puzzleGrid.cells[row][column], number);
             // Reflect the update on UI
             renderGrid();
         }
@@ -120,25 +115,20 @@ public class NewGameActivity extends AppCompatActivity
 
     /** Renders the grid with player's current progress. */
     public void renderGrid() {
-
+        // Fetch the grid UI
         TableLayout gridUI = findViewById(R.id.sudokuPaper);
-        for (int i = 0; i < game.temporaryGrid.BASE_INDEX; i++) {
-
+        for (int i = 0; i < game.puzzleGrid.BASE_INDEX; i++) {
             TableRow blockRow = (TableRow) gridUI.getChildAt(i);
-            for (int j = 0; j < game.temporaryGrid.BASE_INDEX; j++) {
-
+            for (int j = 0; j < game.puzzleGrid.BASE_INDEX; j++) {
                 View block = blockRow.getChildAt(j);
-                Grid.Cell[] blockValues = game.temporaryGrid.getBlock(new int[] {i, j});
+                Grid.Cell[] blockValues = game.puzzleGrid.getBlock(new int[] {i, j});
                 for (int k = 0; k < blockValues.length; k++) {
-                    String idSuffix = "" + k / game.temporaryGrid.BASE_INDEX + k % game.temporaryGrid.BASE_INDEX;
+                    String idSuffix = "" + k / game.puzzleGrid.BASE_INDEX + k % game.puzzleGrid.BASE_INDEX;
                     int id = getResources().getIdentifier("sudokuUnit_" + idSuffix, "id", getPackageName());
                     int value = blockValues[k].value;
-
                     TextView sudokuUnit = (TextView) block.findViewById(id);
-
                     if (value == -1) {
                         sudokuUnit.setText("");
-
                     } else {
                         sudokuUnit.setText(Integer.toHexString(value).toUpperCase());
                     }

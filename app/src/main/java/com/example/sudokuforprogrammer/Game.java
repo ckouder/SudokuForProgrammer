@@ -7,8 +7,7 @@ import com.example.sudokuforprogrammer.sudokuMatrixGenerator.SudokuMatrix;
  * The structure of a game is as follows:
  * 1. Difficulty: Will be set to easy, because it's already pretty hard.
  * 2. Answer Grid: The answer to the puzzle, will not change after being initialized.
- * 3. Temporary Grid: The grid that the user is currently working on.
- * 4. Puzzle Grid: The puzzle that is presented to the user at the beginning of the game.
+ * 3. Puzzle Grid: The puzzle that is presented to the user at the beginning of the game.
  */
 public class Game {
 
@@ -18,10 +17,7 @@ public class Game {
     /** This is the answer to the puzzle. */
     public Grid answerGrid;
 
-    /** This grid starts being the same as puzzle grid, but will change as the player plays. */
-    public Grid temporaryGrid;
-
-    /** The initial state of the game, will not change. */
+    /** The initial state of the game, will change as the user plays. */
     public Grid puzzleGrid;
 
     /** Constructing a game object. */
@@ -40,7 +36,6 @@ public class Game {
             this.answerGrid = new Grid(charGridToIntGrid(charGrid));
             // Initialize the puzzle grid
             this.puzzleGrid = this.answerGrid.clone();
-            this.temporaryGrid = this.answerGrid.clone();
             while (this.puzzleGrid.getNumberOfEmptyCells() < this.DIFFICULTY) {
                 takeARandomCellOut();
             }
@@ -77,12 +72,10 @@ public class Game {
             int row = random.nextInt(16);
             int column = random.nextInt(16);
             // If this is not an empty cell
-            if (this.temporaryGrid.cells[row][column].value != -1) {
+            if (this.puzzleGrid.cells[row][column].value != -1) {
                 // Store the value in case things don't work out well.
-                int savedValue = this.temporaryGrid.cells[row][column].value;
+                int savedValue = this.puzzleGrid.cells[row][column].value;
                 // Remove it, copy the change to puzzleGrid, and flip the flag
-                this.temporaryGrid.cells[row][column].value = -1;
-                this.temporaryGrid.cells[row][column].confirmed = false;
                 this.puzzleGrid.cells[row][column].value = -1;
                 this.puzzleGrid.cells[row][column].confirmed = false;
                 if (Solver.solve(puzzleGrid, System.currentTimeMillis())) {
@@ -90,8 +83,6 @@ public class Game {
                     done = true;
                 } else {
                     // Else revert back
-                    this.temporaryGrid.cells[row][column].value = savedValue;
-                    this.temporaryGrid.cells[row][column].confirmed = true;
                     this.puzzleGrid.cells[row][column].value = savedValue;
                     this.puzzleGrid.cells[row][column].confirmed = true;
                 }

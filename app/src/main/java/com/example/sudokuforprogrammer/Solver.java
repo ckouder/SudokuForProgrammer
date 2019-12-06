@@ -9,9 +9,7 @@ import java.io.FileNotFoundException;
 public class Solver {
 
     /** Privatize constructor. */
-    private Solver() {
-
-    }
+    private Solver() {}
 
     /**
      * Import a Sudoku puzzle from file.
@@ -79,15 +77,10 @@ public class Solver {
      * @return whether it is possible to add a possibility to the cell
      */
     private static boolean possibleToAdd(Grid grid, Grid.Cell cell, int possibility) {
-        // If a possibility violates any one of the three checks
-        if (violatesRowRule(grid, cell, possibility)
+        // If a possibility violates any one of the three checks, they are no longer eligible
+        return !(violatesRowRule(grid, cell, possibility)
                 || violatesColumnRule(grid, cell, possibility)
-                || violatesBlockRule(grid, cell, possibility)) {
-            // They are no longer eligible
-            return false;
-        }
-        // If passed all three test, congratulations!
-        return true;
+                || violatesBlockRule(grid, cell, possibility));
     }
 
     /**
@@ -364,8 +357,8 @@ public class Solver {
             toSolve.printGrid();
         }
         if (toSolve.isSolved()) {
-            System.out.println("Grid is solved in "
-                    + (System.currentTimeMillis() - startTime) + "ms.");
+            System.out.printf("Grid is solved in %d ms.\n",
+                    System.currentTimeMillis() - startTime);
         }
         return toSolve.isSolved();
     }
