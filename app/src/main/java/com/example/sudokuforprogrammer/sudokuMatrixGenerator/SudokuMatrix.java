@@ -55,7 +55,7 @@ public class SudokuMatrix {
      * @param setBlockSize unit block size of the matrix
      * @throws Exception if block size is too big
      */
-    SudokuMatrix(final int setBlockSize) throws Exception {
+    public SudokuMatrix(final int setBlockSize) throws Exception {
         if (setBlockSize > 16) {
             throw new Exception("block size [" + setBlockSize + "] is too large");
         }
@@ -80,7 +80,7 @@ public class SudokuMatrix {
      * @param tokenList list of tokens used as sudoku tokens
      * @throws Exception if block size is too big
      */
-    SudokuMatrix(final int setBlockSize, final char[] tokenList) throws Exception {
+    public SudokuMatrix(final int setBlockSize, final char[] tokenList) throws Exception {
         if (setBlockSize > 16) {
             throw new Exception("block size [" + setBlockSize + "] is too large");
         }
@@ -99,8 +99,24 @@ public class SudokuMatrix {
     /**
      * @return the paper
      */
-    char[][] getPaper() {
+    public char[][] getPaper() {
         return paper;
+    }
+
+    /**
+     * return the paper in integer[][]
+     * @return the paper
+     */
+    public Integer[][] getPaperInInteger() {
+        Integer[][] integerPaper = new Integer[size][size];
+
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
+                integerPaper[i][j] = Integer.parseInt("" + paper[i][j], 16);
+            }
+        }
+
+        return integerPaper;
     }
 
     @Override
