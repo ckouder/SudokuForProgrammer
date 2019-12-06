@@ -131,6 +131,70 @@ public class Grid implements Cloneable {
     }
 
     /**
+     * get a line in grid.
+     *
+     * @param pos position of the line
+     * @param vertical if the line is vertical
+     * @return cells in the grid
+     */
+    public Cell[] getLine(int pos, boolean vertical) {
+        Cell[] line = new Cell[DIMENSION];
+
+        if (vertical) {
+            for (int i = 0; i < DIMENSION; i++) {
+                line[i] = cells[i][pos];
+            }
+
+        } else {
+            line = cells[pos];
+        }
+
+        return line;
+    }
+
+    /**
+     * get a block in the grid.
+     *
+     * @param coordinate [int row, int col] pair
+     * @return cells in a block
+     */
+    public Cell[] getBlock(int[] coordinate) {
+        final Cell[] block = new Cell[DIMENSION];
+
+        int j = 0;
+        for (int row = coordinate[0] * BASE_INDEX; row < (coordinate[0] + 1) * BASE_INDEX; row++) {
+
+            for (int col = coordinate[1] * BASE_INDEX; col < (coordinate[1] + 1) * BASE_INDEX; col++) {
+
+                block[j] = cells[row][col];
+                j++;
+            }
+
+        }
+
+        return block;
+    }
+
+    /**
+     * set a block.
+     *
+     * @param values values you want to add to grid.
+     * @param coordinate coordinate of the cell
+     */
+    public void setBlock(Cell[] values, int[] coordinate) {
+        int j = 0;
+
+        for (int i = coordinate[0] * BASE_INDEX; i < (coordinate[0] + 1) * BASE_INDEX; i++) {
+
+            for (int k = coordinate[1] * BASE_INDEX; k < (coordinate[1] + 1) * BASE_INDEX; k++) {
+
+                cells[i][k] = values[j];
+                j++;
+            }
+        }
+    }
+
+    /**
      * Make a deep copy of the current grid. The idea is to initialize another grid with an
      * int 2-dimensional array.
      * @return a copy of the grid
