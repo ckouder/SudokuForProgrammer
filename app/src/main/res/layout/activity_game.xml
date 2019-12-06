@@ -87,6 +87,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TableRow
+            android:id="@+id/sudokuRow0"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -123,13 +124,14 @@
         </TableRow>
 
         <TableRow
+            android:id="@+id/sudokuRow1"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             android:paddingLeft="1.5dp">
 
             <fragment
-                android:id="@+id/fragmen5"
+                android:id="@+id/fragment5"
                 android:name="com.example.sudokuforprogrammer.SudokuBlock"
                 android:layout_width="83.2dp"
                 android:layout_height="83.2dp"
@@ -158,6 +160,7 @@
         </TableRow>
 
         <TableRow
+            android:id="@+id/sudokuRow2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
@@ -193,6 +196,7 @@
         </TableRow>
 
         <TableRow
+            android:id="@+id/sudokuRow3"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"

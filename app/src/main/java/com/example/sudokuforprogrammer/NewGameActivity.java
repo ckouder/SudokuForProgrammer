@@ -5,8 +5,15 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TableLayout;
+import android.widget.TableRow;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+
+import org.w3c.dom.Text;
 
 public class NewGameActivity extends AppCompatActivity
         implements SudokuBlock.OnFragmentInteractionListener {
@@ -16,6 +23,8 @@ public class NewGameActivity extends AppCompatActivity
     /** pointer that stored [int row, int col] pair. */
     public int[] pointer = new int[2];
 
+    private View[][] fragments;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -24,7 +33,11 @@ public class NewGameActivity extends AppCompatActivity
 
         // Initialize a new game
         this.game = new Game();
+        game.initializeAnswerGrid();
+        game.initializePuzzleGrid();
         setEventListenerForNumberButtons();
+
+
         // Update UI
         renderGrid();
 
@@ -111,5 +124,30 @@ public class NewGameActivity extends AppCompatActivity
      */
     public void renderGrid() {
 
+        TableLayout gridUI = findViewById(R.id.sudokuPaper);
+        for (int i = 0; i < game.temporaryGrid.BASE_INDEX; i++) {
+
+            TableRow blockRow = (TableRow) gridUI.getChildAt(i);
+            for (int j = 0; j < game.temporaryGrid.BASE_INDEX; j++) {
+
+                View block = blockRow.getChildAt(j);
+                Grid.Cell[] blockValues = game.temporaryGrid.getBlock(new int[] {i, j});
+                for (int k = 0; k < blockValues.length; k++) {
+                    String idSuffix = "" + k / game.temporaryGrid.BASE_INDEX + k % game.temporaryGrid.BASE_INDEX;
+                    int id = getResources().getIdentifier("sudokuUnit_" + idSuffix, "id", getPackageName());
+                    int value = blockValues[k].value;
+
+                    TextView sudokuUnit = (TextView) block.findViewById(id);
+//                    System.out.println(block);
+
+                    if (value == -1) {
+                        sudokuUnit.setText("");
+
+                    } else {
+                        sudokuUnit.setText(Integer.toHexString(value).toUpperCase());
+                    }
+                }
+            }
+        }
     }
 }
