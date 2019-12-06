@@ -8,7 +8,11 @@ import android.view.View;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class NewGameActivity extends AppCompatActivity
-        implements SudokuBlock.OnFragmentInteractionListener{
+        implements SudokuBlock.OnFragmentInteractionListener {
+
+
+    /** pointer that stored [int row, int col] pair. */
+    public int[] pointer = new int[2];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
