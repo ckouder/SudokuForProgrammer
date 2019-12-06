@@ -1,6 +1,7 @@
 package com.example.sudokuforprogrammer;
 
 import java.util.Random;
+import com.example.sudokuforprogrammer.sudokuMatrixGenerator.SudokuMatrix;
 
 // A game is consisted of three grids, namely the answer grid, the user's grid, and temporary grid.
 public class Game {
@@ -8,26 +9,8 @@ public class Game {
     /** The difficulty of the game. */
     public final int DIFFICULTY = Constants.DIFFICULTY_EASY;
 
-    // TODO: Replace this answer grid with result from the generator.
     /** This is the answer to the puzzle. */
-    public Grid answerGrid = Grid.importGridFromStringArray(new String[] {
-            "A, C, 3, E, F, 2, 0, 1, B, 7, 9, 6, 4, 5, D, 8",
-            "F, D, 2, 1, 4, B, C, 5, A, 3, 8, 0, 6, E, 9, 7",
-            "7, 6, 9, B, 3, E, 8, D, 2, 1, 5, 4, A, 0, C, F",
-            "4, 5, 8, 0, A, 7, 9, 6, F, D, E, C, 2, 1, 3, B",
-            "B, 2, D, 9, C, 6, 5, 7, 1, E, 0, F, 8, A, 4, 3",
-            "1, 7, F, 6, 9, 3, D, 4, 5, A, C, 8, B, 2, 0, E",
-            "3, 4, E, A, 8, 0, 1, 2, 6, 9, B, 7, F, D, 5, C",
-            "0, 8, C, 5, B, A, E, F, D, 2, 4, 3, 9, 7, 1, 6",
-            "C, B, 5, D, E, 4, 6, A, 8, 0, 2, 9, 3, F, 7, 1",
-            "9, A, 6, 4, 5, D, B, 0, 3, F, 7, 1, C, 8, E, 2",
-            "E, F, 1, 8, 7, 9, 2, 3, C, 4, D, A, 0, 6, B, 5",
-            "2, 3, 0, 7, 1, C, F, 8, E, B, 6, 5, D, 9, A, 4",
-            "6, 1, A, 2, D, 5, 4, 9, 7, 8, 3, B, E, C, F, 0",
-            "8, E, 4, F, 2, 1, 3, C, 0, 5, A, D, 7, B, 6, 9",
-            "D, 0, B, 3, 6, F, 7, E, 9, C, 1, 2, 5, 4, 8, A",
-            "5, 9, 7, C, 0, 8, A, B, 4, 6, F, E, 1, 3, 2, D"
-    });
+    public Grid answerGrid;
 
     /**
      * This is a temporary grid to obtain the puzzle grid.
@@ -52,6 +35,32 @@ public class Game {
         while (this.puzzleGrid.getNumberOfEmptyCells() < this.DIFFICULTY) {
             takeARandomCellOut();
         }
+    }
+
+    /** Initialize an answer grid from the sudoku grid generator. */
+    public void initializeAnswerGrid() {
+        try {
+            // Token used for grid generation
+            char[] token = {
+                    '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'
+            };
+            // Store the generated Sudoku grid as a 2-D array of char
+            char[][] charGrid = new SudokuMatrix(4, token).getPaper();
+            // Turn that 2-D char array
+            this.answerGrid = new Grid(charGridToIntGrid(charGrid));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private int[][] charGridToIntGrid(char[][] charGrid) {
+        int[][] intGrid = new int[16][16];
+        for (int i = 0; i < charGrid.length; i++) {
+            for (int j = 0; j < charGrid[i].length; j++) {
+                intGrid[i][j] = Integer.parseInt(charGrid[i][j] + "", 16);
+            }
+        }
+        return intGrid;
     }
 
     /** Auxiliary function. */
@@ -89,6 +98,7 @@ public class Game {
         // @CHANGE
         // TODO: Write a constructor for Game.
         Game newGame = new Game();
+        newGame.initializeAnswerGrid();
         newGame.initializePuzzleGrid();
         newGame.puzzleGrid.printGrid();
         System.out.println("Final Puzzle!");
