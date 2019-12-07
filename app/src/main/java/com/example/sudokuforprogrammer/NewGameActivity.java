@@ -150,12 +150,11 @@ public class NewGameActivity extends AppCompatActivity
             for (int j = 0; j < Grid.BASE_INDEX; j++) {
                 View block = blockRow.getChildAt(j);
                 Grid.Cell[] blockValues = game.puzzleGrid.getBlock(new int[] {i, j});
-                // The int variable blockIndex indicates which block is currently selected
                 for (int k = 0; k < blockValues.length; k++) {
                     int rowInBlock = k / Grid.BASE_INDEX;
                     int columnInBlock = k % Grid.BASE_INDEX;
-                    String idSuffix = "" + rowInBlock + columnInBlock;
-                    int id = getResources().getIdentifier("sudokuUnit_" + idSuffix,
+                    String idSuffix = "_" + rowInBlock + columnInBlock;
+                    int id = getResources().getIdentifier("sudokuUnit" + idSuffix,
                             "id", getPackageName());
                     int value = blockValues[k].value;
                     TextView sudokuUnit = (TextView) block.findViewById(id);
