@@ -1,5 +1,8 @@
 package com.example.sudokuforprogrammer;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -65,14 +68,7 @@ public class NewGameActivity extends AppCompatActivity
     }
 
     public void setEventListenerForNumberButtons() {
-        char[] tokens = {
-                '0', '1', '2', '3',
-                '4', '5', '6', '7',
-                '8', '9', 'A', 'B',
-                'C', 'D', 'E', 'F'
-        };
-
-        for (char c : tokens) {
+        for (char c : Constants.TOKENS) {
             int id = getResources().getIdentifier("btn_Num" + c, "id", getPackageName());
             ((Button) findViewById(id)).setOnClickListener(v -> buttonAction("" + c));
         }
@@ -94,6 +90,18 @@ public class NewGameActivity extends AppCompatActivity
             Solver.confirmCell(game.puzzleGrid, game.puzzleGrid.cells[row][column], number);
             // Reflect the update on UI
             renderGrid();
+            // If the user wins, open up a new dialogue which redirects back to main menu
+            if (game.puzzleGrid.isSolved()) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage("Congratulations! You have finished the puzzle!")
+                        .setPositiveButton("OK", (DialogInterface dialog, int id) -> {
+                            Intent mainMenu = new Intent(this, MainActivity.class);
+                            startActivity(mainMenu);
+                            finish();
+                        });
+                builder.create();
+                builder.show();
+            }
         }
         // Else… Do nothing for the moment being
         // TODO: Add some code if the player makes a mistake.

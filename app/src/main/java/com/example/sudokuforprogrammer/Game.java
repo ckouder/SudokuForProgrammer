@@ -74,16 +74,9 @@ public class Game {
 
     /** Constructing a game object. */
     public Game() {
-        // Token used for grid generation
-        char[] token = {
-                '0', '1', '2', '3',
-                '4', '5', '6', '7',
-                '8', '9', 'A', 'B',
-                'C', 'D', 'E', 'F'
-        };
         try {
             // Store the generated Sudoku grid as a 2-D array of char
-            char[][] charGrid = new SudokuMatrix(4, token).getPaper();
+            char[][] charGrid = new SudokuMatrix(4, Constants.TOKENS).getPaper();
             // Turn that 2-D char array into a new grid
             this.answerGrid = new Grid(charGridToIntGrid(charGrid));
             // Initialize the puzzle grid
