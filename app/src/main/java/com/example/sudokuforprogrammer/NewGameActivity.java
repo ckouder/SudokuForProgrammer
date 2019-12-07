@@ -32,6 +32,7 @@ public class NewGameActivity extends AppCompatActivity
         // Initialize a new game
         this.game = new Game();
         setEventListenerForNumberButtons();
+        setEventListenerForGameControlButtons();
 
         // Update UI
         renderGrid();
@@ -49,6 +50,7 @@ public class NewGameActivity extends AppCompatActivity
         ImageButton gameControlButton = findViewById(R.id.btn_gameControl);
 
 
+        // set listener for timer control
         final String TIMER_IS_SHOWN = getResources().getString(R.string.game_timer_state_shown);
         final String TIMER_IS_HIDED = getResources().getString(R.string.game_timer_state_hided);
         timerControlButton.setOnClickListener(v -> {
