@@ -1,6 +1,5 @@
 package com.example.sudokuforprogrammer;
 
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -20,8 +19,6 @@ public class NewGameActivity extends AppCompatActivity
 
     /** pointer that stored [int row, int col] pair. */
     public int[] pointer = new int[2];
-
-    private View[][] fragments;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +45,6 @@ public class NewGameActivity extends AppCompatActivity
         TextView timerText = findViewById(R.id.text_timer);
         ImageButton timerControlButton = findViewById(R.id.btn_gameTimerControl);
         ImageButton gameControlButton = findViewById(R.id.btn_gameControl);
-
 
         // set listener for timer control
         final String TIMER_IS_SHOWN = getResources().getString(R.string.game_timer_state_shown);

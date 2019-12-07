@@ -20,6 +20,58 @@ public class Game {
     /** The initial state of the game, will change as the user plays. */
     public Grid puzzleGrid;
 
+    /**
+     * A class to represent timer.
+     * Functions that a timer should have:
+     * 1. Start/Continue
+     * 2. Stop/End
+     * 3. Reset
+     */
+    public class Timer {
+
+        /** Amount of time in ms recorded by Timer. */
+        public long time;
+
+        /** Start time of the timer. */
+        public long start;
+
+        /** End time of the timer. */
+        public long end;
+
+        /** Whether the timer is running. */
+        public boolean isRunning;
+
+        /** Start a timer. */
+        public void start() {
+            this.start = System.currentTimeMillis();
+            isRunning = true;
+        }
+
+        /** Pause a timer. */
+        public void pause() {
+            this.end = System.currentTimeMillis();
+            this.time += end - start;
+            isRunning = false;
+        }
+
+        /** Reset a timer. */
+        public void reset() {
+            this.time = 0;
+        }
+
+        /**
+         * Fetch timer's time.
+         * @return time recorded
+         */
+        public long getTime() {
+            return isRunning ? time + (System.currentTimeMillis() - start) : time;
+        }
+
+    }
+
+    /** Timer for the game. */
+    public Timer timer;
+
     /** Constructing a game object. */
     public Game() {
         // Token used for grid generation
@@ -42,7 +94,8 @@ public class Game {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        this.timer = new Timer();
+        this.timer.start();
     }
 
     /**
