@@ -149,13 +149,13 @@ public class NewGameActivity extends AppCompatActivity
                 View block = blockRow.getChildAt(j);
                 Grid.Cell[] blockValues = game.puzzleGrid.getBlock(new int[] {i, j});
                 // The int variable blockIndex indicates which block is currently selected
-                for (int blockIndex = 0; blockIndex < blockValues.length; blockIndex++) {
-                    int rowInBlock = blockIndex / Grid.BASE_INDEX;
-                    int columnInBlock = blockIndex % Grid.BASE_INDEX;
+                for (int k = 0; k < blockValues.length; k++) {
+                    int rowInBlock = k / Grid.BASE_INDEX;
+                    int columnInBlock = k % Grid.BASE_INDEX;
                     String idSuffix = "" + rowInBlock + columnInBlock;
                     int id = getResources().getIdentifier("sudokuUnit_" + idSuffix,
                             "id", getPackageName());
-                    int value = blockValues[blockIndex].value;
+                    int value = blockValues[k].value;
                     TextView sudokuUnit = (TextView) block.findViewById(id);
                     if (value == -1) {
                         sudokuUnit.setText(" ");
@@ -163,7 +163,7 @@ public class NewGameActivity extends AppCompatActivity
                         sudokuUnit.setText(Integer.toHexString(value).toUpperCase());
                     }
                     // Set event listener for each cell
-                    int blockIndicator = blockIndex;
+                    int blockIndicator = i * Grid.BASE_INDEX + j;
                     sudokuUnit.setOnClickListener(v -> {
                         System.out.println("[from new game activity] You pressed me!!!!");
                         // Change the row value of the pointer
@@ -172,11 +172,6 @@ public class NewGameActivity extends AppCompatActivity
                         // Change the column value of the pointer
                         this.pointer[1] = blockIndicator % Grid.BASE_INDEX * Grid.BASE_INDEX
                                 + columnInBlock;
-
-                        System.out.println("[from new game activity] Pointer position should be [" + this.pointer[0] + ", " + this.pointer[1] + "]");
-                        System.out.println("[from new game activity] BlockIndicator: " + blockIndicator);
-                        System.out.println("[from new game activity] rowInBlock: " + rowInBlock);
-                        System.out.println("[from new game activity] columnInBlock: " + columnInBlock);
                     });
                 }
             }
