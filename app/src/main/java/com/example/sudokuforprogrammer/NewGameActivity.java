@@ -1,9 +1,11 @@
 package com.example.sudokuforprogrammer;
 
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -38,6 +40,29 @@ public class NewGameActivity extends AppCompatActivity
 
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    public void setEventListenerForGameControlButtons() {
+        Button quitButton = findViewById(R.id.btn_gameQuit);
+        TextView timerText = findViewById(R.id.text_timer);
+        ImageButton timerControlButton = findViewById(R.id.btn_gameTimerControl);
+        ImageButton gameControlButton = findViewById(R.id.btn_gameControl);
+
+
+        final String TIMER_IS_SHOWN = getResources().getString(R.string.game_timer_state_shown);
+        final String TIMER_IS_HIDED = getResources().getString(R.string.game_timer_state_hided);
+        timerControlButton.setOnClickListener(v -> {
+
+            if (timerControlButton.getTag().equals(TIMER_IS_SHOWN)) {
+
+                timerControlButton.setImageDrawable(getDrawable(R.drawable.ic_timer_hide));
+                timerControlButton.setTag(TIMER_IS_HIDED);
+
+            } else if (timerControlButton.getTag().equals(TIMER_IS_HIDED)) {
+                timerControlButton.setImageDrawable(getDrawable(R.drawable.ic_timer_show));
+                timerControlButton.setTag(TIMER_IS_SHOWN);
+            }
+        });
     }
 
     public void setEventListenerForNumberButtons() {

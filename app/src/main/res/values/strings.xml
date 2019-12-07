@@ -8,6 +8,8 @@
     <string name="quote_author_default">by Game Creator</string>
 
     <string name="game_quit">:q</string>
+    <string name="game_timer_state_shown">shown</string>
+    <string name="game_timer_state_hided">hided</string>
 
     <string name="history_title">&lt;highest-score&gt;</string>
     <string name="history_title_end">&lt;\/highest-score&gt;</string>
@@ -18,6 +20,4 @@
     <string name="history_creator">&lt;creator&gt;</string>
     <string name="history_creator_end">&lt;\/creator&gt;</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

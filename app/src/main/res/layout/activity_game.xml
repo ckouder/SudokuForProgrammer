@@ -42,7 +42,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="10dp"
         app:layout_constraintBottom_toTopOf="@+id/sudokuPaper"
         app:layout_constraintEnd_toEndOf="@+id/sudokuPaper"
         app:layout_constraintStart_toStartOf="@+id/sudokuPaper">
@@ -94,6 +94,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
             android:backgroundTint="@color/colorBackground"
+            android:tag="shown"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btn_gameControl"
             app:layout_constraintTop_toTopOf="parent"
