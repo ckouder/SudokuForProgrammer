@@ -117,21 +117,35 @@ public class NewGameActivity extends AppCompatActivity
     public void renderGrid() {
         // Fetch the grid UI
         TableLayout gridUI = findViewById(R.id.sudokuPaper);
-        for (int i = 0; i < game.puzzleGrid.BASE_INDEX; i++) {
+        for (int i = 0; i < Grid.BASE_INDEX; i++) {
             TableRow blockRow = (TableRow) gridUI.getChildAt(i);
-            for (int j = 0; j < game.puzzleGrid.BASE_INDEX; j++) {
+            for (int j = 0; j < Grid.BASE_INDEX; j++) {
                 View block = blockRow.getChildAt(j);
                 Grid.Cell[] blockValues = game.puzzleGrid.getBlock(new int[] {i, j});
-                for (int k = 0; k < blockValues.length; k++) {
-                    String idSuffix = "" + k / game.puzzleGrid.BASE_INDEX + k % game.puzzleGrid.BASE_INDEX;
-                    int id = getResources().getIdentifier("sudokuUnit_" + idSuffix, "id", getPackageName());
-                    int value = blockValues[k].value;
+                // The int variable blockIndex indicates which block is currently selected
+                for (int blockIndex = 0; blockIndex < blockValues.length; blockIndex++) {
+                    int rowInBlock = blockIndex / Grid.BASE_INDEX;
+                    int columnInBlock = blockIndex % Grid.BASE_INDEX;
+                    String idSuffix = "" + rowInBlock + columnInBlock;
+                    int id = getResources().getIdentifier("sudokuUnit_" + idSuffix,
+                            "id", getPackageName());
+                    int value = blockValues[blockIndex].value;
                     TextView sudokuUnit = (TextView) block.findViewById(id);
                     if (value == -1) {
-                        sudokuUnit.setText("");
+                        sudokuUnit.setText(" ");
                     } else {
                         sudokuUnit.setText(Integer.toHexString(value).toUpperCase());
                     }
+                    // Set event listener for each cell
+                    int blockIndicator = blockIndex;
+                    sudokuUnit.setOnClickListener(v -> {
+                        // Change the row value of the pointer
+                        this.pointer[0] = blockIndicator / Grid.BASE_INDEX * Grid.BASE_INDEX
+                                + rowInBlock;
+                        // Change the column value of the pointer
+                        this.pointer[1] = blockIndicator % Grid.BASE_INDEX * Grid.BASE_INDEX
+                                + columnInBlock;
+                    });
                 }
             }
         }
