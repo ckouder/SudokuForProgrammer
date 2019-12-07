@@ -153,6 +153,8 @@ public class NewGameActivity extends AppCompatActivity
                 for (int k = 0; k < blockValues.length; k++) {
                     int rowInBlock = k / Grid.BASE_INDEX;
                     int columnInBlock = k % Grid.BASE_INDEX;
+                    int rowInPuzzle = i * Grid.BASE_INDEX + rowInBlock;
+                    int columnInPuzzle = j * Grid.BASE_INDEX + columnInBlock;
                     String idSuffix = "_" + rowInBlock + columnInBlock;
                     int id = getResources().getIdentifier("sudokuUnit" + idSuffix,
                             "id", getPackageName());
@@ -173,7 +175,22 @@ public class NewGameActivity extends AppCompatActivity
                         // Change the column value of the pointer
                         this.pointer[1] = blockIndicator % Grid.BASE_INDEX * Grid.BASE_INDEX
                                 + columnInBlock;
+
+                        // add highlight to the cell
+                        renderGrid();
+                        sudokuUnit.setBackgroundColor(getColor(R.color.colorPrimary__100));
+                        sudokuUnit.setTextColor(getColor(R.color.colorBackground));
                     });
+
+                    if (rowInPuzzle == pointer[0]
+                        || columnInPuzzle == pointer[1]
+                        || (pointer[0] / Grid.BASE_INDEX == i && pointer[1] / Grid.BASE_INDEX == j)) {
+                        sudokuUnit.setTextColor(getColor(R.color.colorPrimary__100));
+                        sudokuUnit.setBackground(getDrawable(R.drawable.border__sm__50__with_p_color__20));
+                    } else {
+                        sudokuUnit.setTextColor(getColor(R.color.colorPrimary__100));
+                        sudokuUnit.setBackground(getDrawable(R.drawable.border__sm__30));
+                    }
                 }
             }
         }

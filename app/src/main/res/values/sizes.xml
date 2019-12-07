@@ -7,5 +7,5 @@
     <dimen name="size_sudokuNumBtn">36dp</dimen>
     <dimen name="size_sudokuControlBtn">40dp</dimen>
 
-    <dimen name="size_sudokuUnit">18.8dp</dimen>
+    <dimen name="size_sudokuUnit">21dp</dimen>
 </resources>
