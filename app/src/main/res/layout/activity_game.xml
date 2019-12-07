@@ -111,7 +111,7 @@
         android:id="@+id/sudokuPaper"
         android:layout_width="@dimen/size_sudokuPaperLength"
         android:layout_height="@dimen/size_sudokuPaperLength"
-        android:background="@drawable/border__normal"
+        android:background="@drawable/border__normal__70"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

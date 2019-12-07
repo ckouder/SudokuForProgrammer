@@ -141,13 +141,19 @@ public class NewGameActivity extends AppCompatActivity
                     if (rowInPuzzle == pointer[0] && columnInPuzzle == pointer[1]) {
                         sudokuUnit.setBackgroundColor(getColor(R.color.colorPrimary__100));
                         sudokuUnit.setTextColor(getColor(R.color.colorBackground));
-                    } else if (rowInPuzzle == pointer[0]
-                        || columnInPuzzle == pointer[1]
-                        || (pointer[0] / Grid.BASE_INDEX == i && pointer[1] / Grid.BASE_INDEX == j)) {
+                    } else if (Integer.toHexString(game.puzzleGrid.cells[pointer[0]][pointer[1]].value)
+                            .toUpperCase()
+                            .equals(((String) sudokuUnit.getText()))) {
                         sudokuUnit.setTextColor(getColor(R.color.colorPrimary__100));
                         sudokuUnit.setBackground(getDrawable(R.drawable.border__sm__50__with_p_color__20));
+                    } else if (rowInPuzzle == pointer[0]
+                            || columnInPuzzle == pointer[1]
+                            || (pointer[0] / Grid.BASE_INDEX == i
+                                && pointer[1] / Grid.BASE_INDEX == j)) {
+                        sudokuUnit.setTextColor(getColor(R.color.colorPrimary__50));
+                        sudokuUnit.setBackground(getDrawable(R.drawable.border__sm__50__with_p_color__20));
                     } else {
-                        sudokuUnit.setTextColor(getColor(R.color.colorPrimary__100));
+                        sudokuUnit.setTextColor(getColor(R.color.colorPrimary__50));
                         sudokuUnit.setBackground(getDrawable(R.drawable.border__sm__30));
                     }
                 }

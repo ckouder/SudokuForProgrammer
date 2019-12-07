@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item type="id" name="unit_row"/>
+    <item type="id" name="unit_column"/>
+    <item type="id" name="block_row"/>
+    <item type="id" name="block_column"/>
+</resources>
