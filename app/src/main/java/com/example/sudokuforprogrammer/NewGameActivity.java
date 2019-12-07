@@ -136,11 +136,12 @@ public class NewGameActivity extends AppCompatActivity
 
                         // add highlight to the cell
                         renderGrid();
-                        sudokuUnit.setBackgroundColor(getColor(R.color.colorPrimary__100));
-                        sudokuUnit.setTextColor(getColor(R.color.colorBackground));
                     });
 
-                    if (rowInPuzzle == pointer[0]
+                    if (rowInPuzzle == pointer[0] && columnInPuzzle == pointer[1]) {
+                        sudokuUnit.setBackgroundColor(getColor(R.color.colorPrimary__100));
+                        sudokuUnit.setTextColor(getColor(R.color.colorBackground));
+                    } else if (rowInPuzzle == pointer[0]
                         || columnInPuzzle == pointer[1]
                         || (pointer[0] / Grid.BASE_INDEX == i && pointer[1] / Grid.BASE_INDEX == j)) {
                         sudokuUnit.setTextColor(getColor(R.color.colorPrimary__100));
