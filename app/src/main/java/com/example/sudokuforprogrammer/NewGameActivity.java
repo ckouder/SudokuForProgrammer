@@ -54,11 +54,12 @@ public class NewGameActivity extends AppCompatActivity
         timerControlButton.setOnClickListener(v -> {
 
             if (timerControlButton.getTag().equals(TIMER_IS_SHOWN)) {
-
+                timerText.setVisibility(View.INVISIBLE);
                 timerControlButton.setImageDrawable(getDrawable(R.drawable.ic_timer_hide));
                 timerControlButton.setTag(TIMER_IS_HIDED);
 
             } else if (timerControlButton.getTag().equals(TIMER_IS_HIDED)) {
+                timerText.setVisibility(View.VISIBLE);
                 timerControlButton.setImageDrawable(getDrawable(R.drawable.ic_timer_show));
                 timerControlButton.setTag(TIMER_IS_SHOWN);
             }
