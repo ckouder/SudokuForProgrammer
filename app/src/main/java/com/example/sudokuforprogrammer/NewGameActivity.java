@@ -139,12 +139,18 @@ public class NewGameActivity extends AppCompatActivity
                     // Set event listener for each cell
                     int blockIndicator = blockIndex;
                     sudokuUnit.setOnClickListener(v -> {
+                        System.out.println("[from new game activity] You pressed me!!!!");
                         // Change the row value of the pointer
                         this.pointer[0] = blockIndicator / Grid.BASE_INDEX * Grid.BASE_INDEX
                                 + rowInBlock;
                         // Change the column value of the pointer
                         this.pointer[1] = blockIndicator % Grid.BASE_INDEX * Grid.BASE_INDEX
                                 + columnInBlock;
+
+                        System.out.println("[from new game activity] Pointer position should be [" + this.pointer[0] + ", " + this.pointer[1] + "]");
+                        System.out.println("[from new game activity] BlockIndicator: " + blockIndicator);
+                        System.out.println("[from new game activity] rowInBlock: " + rowInBlock);
+                        System.out.println("[from new game activity] columnInBlock: " + columnInBlock);
                     });
                 }
             }
