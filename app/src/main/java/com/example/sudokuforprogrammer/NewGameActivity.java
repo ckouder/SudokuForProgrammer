@@ -195,6 +195,7 @@ public class NewGameActivity extends AppCompatActivity
                 SharedPreferences store = getSharedPreferences(getString(R.string.app_saved_game), MODE_PRIVATE);
                 SharedPreferences.Editor storeEditor = store.edit();
                 try {
+                    //TODO: determine if the saved game is the same as finished one
                     storeEditor.putString(getString(R.string.app_saved_game), ObjectSerializer.serialize(null));
                     storeEditor.apply();
 
