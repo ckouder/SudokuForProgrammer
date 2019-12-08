@@ -1,5 +1,6 @@
 package com.example.sudokuforprogrammer;
 
+import java.io.Serializable;
 import java.util.Random;
 import com.example.sudokuforprogrammer.sudokuMatrixGenerator.SudokuMatrix;
 
@@ -9,7 +10,7 @@ import com.example.sudokuforprogrammer.sudokuMatrixGenerator.SudokuMatrix;
  * 2. Answer Grid: The answer to the puzzle, will not change after being initialized.
  * 3. Puzzle Grid: The puzzle that is presented to the user at the beginning of the game.
  */
-public class Game {
+public class Game implements Serializable {
 
     /** The difficulty of the game. */
     public final int DIFFICULTY = Constants.DIFFICULTY_EASY;
