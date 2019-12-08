@@ -20,9 +20,6 @@ public class NewGameActivity extends AppCompatActivity
     /** The game object. */
     public Game game;
 
-    /** pointer that stored [int row, int col] pair. */
-    public int[] pointer = new int[2];
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -31,8 +28,9 @@ public class NewGameActivity extends AppCompatActivity
 
         // Initialize a new game
         this.game = new Game();
-        setEventListenerForNumberButtons();
-        setEventListenerForGameControlButtons();
+        setEventListenersForNumberButtons();
+        setEventListenersForGameControlButtons();
+        setEventListenersForDirectionButtons();
 
         // Update UI
         renderGrid();
@@ -43,7 +41,8 @@ public class NewGameActivity extends AppCompatActivity
 
     }
 
-    public void setEventListenerForGameControlButtons() {
+    /** Set event listeners for game control buttons. */
+    public void setEventListenersForGameControlButtons() {
         Button quitButton = findViewById(R.id.btn_gameQuit);
         TextView timerText = findViewById(R.id.text_timer);
         ImageButton timerControlButton = findViewById(R.id.btn_gameTimerControl);
@@ -67,11 +66,52 @@ public class NewGameActivity extends AppCompatActivity
         });
     }
 
-    public void setEventListenerForNumberButtons() {
+    /** Set event listeners for each token used in game. */
+    public void setEventListenersForNumberButtons() {
         for (char c : Constants.TOKENS) {
             int id = getResources().getIdentifier("btn_Num" + c, "id", getPackageName());
-            ((Button) findViewById(id)).setOnClickListener(v -> buttonAction("" + c));
+            findViewById(id).setOnClickListener(v -> buttonAction("" + c));
         }
+    }
+
+    /** Set event listeners for direction buttons. */
+    public void setEventListenersForDirectionButtons() {
+        // Set event listener for left button.
+        Button left = findViewById(R.id.sudokuControlLeft);
+        left.setOnClickListener(v -> {
+            // If exceeds boundary, revert
+            if (--game.pointer[1] < 0) {
+                game.pointer[1]++;
+            }
+            renderGrid();
+        });
+        // Set event listener for down button.
+        Button down = findViewById(R.id.sudokuControlDown);
+        down.setOnClickListener(v -> {
+            // If exceeds boundary, revert
+            if (++game.pointer[0] >= Grid.DIMENSION) {
+                game.pointer[0]--;
+            }
+            renderGrid();
+        });
+        // Set event listener for up button.
+        Button up = findViewById(R.id.sudokuControlUp);
+        up.setOnClickListener(v -> {
+            // If exceeds boundary, revert
+            if (--game.pointer[0] < 0) {
+                game.pointer[0]++;
+            }
+            renderGrid();
+        });
+        // Set event listener for right button.
+        Button right = findViewById(R.id.sudokuControlRight);
+        right.setOnClickListener(v -> {
+            // If exceeds boundary, revert
+            if (++game.pointer[1] >= Grid.DIMENSION) {
+                game.pointer[1]--;
+            }
+            renderGrid();
+        });
     }
 
     /**
@@ -80,8 +120,8 @@ public class NewGameActivity extends AppCompatActivity
      */
     public void buttonAction(String option) {
         // Fetch pointer and option values
-        int row = pointer[0];
-        int column = pointer[1];
+        int row = game.pointer[0];
+        int column = game.pointer[1];
         int number = Integer.parseInt(option, 16);
         // If this is an empty cell and it is the right number indeed…
         if ((game.puzzleGrid.cells[row][column].value == -1
@@ -111,8 +151,11 @@ public class NewGameActivity extends AppCompatActivity
     public void renderGrid() {
         // Fetch the grid UI
         TableLayout gridUI = findViewById(R.id.sudokuPaper);
+        // Renders the grid with 4x4 blocks
+        // i indicates a block's row
         for (int i = 0; i < Grid.BASE_INDEX; i++) {
             TableRow blockRow = (TableRow) gridUI.getChildAt(i);
+            // j indicates a block's column
             for (int j = 0; j < Grid.BASE_INDEX; j++) {
                 View block = blockRow.getChildAt(j);
                 Grid.Cell[] blockValues = game.puzzleGrid.getBlock(new int[] {i, j});
@@ -125,7 +168,7 @@ public class NewGameActivity extends AppCompatActivity
                     int id = getResources().getIdentifier("sudokuUnit" + idSuffix,
                             "id", getPackageName());
                     int value = blockValues[k].value;
-                    TextView sudokuUnit = (TextView) block.findViewById(id);
+                    TextView sudokuUnit = block.findViewById(id);
                     if (value == -1) {
                         sudokuUnit.setText(" ");
                     } else {
@@ -134,41 +177,48 @@ public class NewGameActivity extends AppCompatActivity
                     // Set event listener for each cell
                     int blockIndicator = i * Grid.BASE_INDEX + j;
                     sudokuUnit.setOnClickListener(v -> {
-                        System.out.println("[from new game activity] You pressed me!!!!");
                         // Change the row value of the pointer
-                        this.pointer[0] = blockIndicator / Grid.BASE_INDEX * Grid.BASE_INDEX
+                        game.pointer[0] = blockIndicator / Grid.BASE_INDEX * Grid.BASE_INDEX
                                 + rowInBlock;
                         // Change the column value of the pointer
-                        this.pointer[1] = blockIndicator % Grid.BASE_INDEX * Grid.BASE_INDEX
+                        game.pointer[1] = blockIndicator % Grid.BASE_INDEX * Grid.BASE_INDEX
                                 + columnInBlock;
 
                         // add highlight to the cell
                         renderGrid();
                     });
 
-                    // add highlight to current pointer position
-                    if (rowInPuzzle == pointer[0] && columnInPuzzle == pointer[1]) {
+                    // Add highlight to current pointer position
+                    if (rowInPuzzle == game.pointer[0] && columnInPuzzle == game.pointer[1]) {
                         sudokuUnit.setBackgroundColor(getColor(R.color.colorPrimary__100));
                         sudokuUnit.setTextColor(getColor(R.color.colorBackground));
-                    // add highlight to units with the same number
-                    } else if (Integer.toHexString(game.puzzleGrid.cells[pointer[0]][pointer[1]].value)
+                    // Add highlight to cells containing the same numerical value
+                    } else if (Integer.toHexString(game.puzzleGrid.cells[game.pointer[0]][game.pointer[1]].value)
                             .toUpperCase()
-                            .equals(((String) sudokuUnit.getText()))) {
+                            .equals(sudokuUnit.getText())) {
                         sudokuUnit.setTextColor(getColor(R.color.colorPrimary__100));
                         sudokuUnit.setBackground(getDrawable(R.drawable.border__sm__50__with_p_color__20));
-                    // add highlight to row and column
-                    } else if (rowInPuzzle == pointer[0]
-                            || columnInPuzzle == pointer[1]
-                            || (pointer[0] / Grid.BASE_INDEX == i
-                                && pointer[1] / Grid.BASE_INDEX == j)) {
+                    // Add highlight to cells in the same row and column as the current cell
+                    } else if (rowInPuzzle == game.pointer[0]
+                            || columnInPuzzle == game.pointer[1]
+                            || (game.pointer[0] / Grid.BASE_INDEX == i
+                                && game.pointer[1] / Grid.BASE_INDEX == j)) {
                         sudokuUnit.setTextColor(getColor(R.color.colorPrimary__50));
                         sudokuUnit.setBackground(getDrawable(R.drawable.border__sm__50__with_p_color__20));
-                    // remove highlight if the unit for the rest units
+                    // Remove highlight for all cells that missed the conditions above
                     } else {
                         sudokuUnit.setTextColor(getColor(R.color.colorPrimary__50));
                         sudokuUnit.setBackground(getDrawable(R.drawable.border__sm__30));
                     }
                 }
+            }
+        }
+        for (char c : Constants.TOKENS) {
+            // If all instances of one token has been filled on board
+            if (game.puzzleGrid.getNumberOfInstancesOnBoard(c) == Grid.DIMENSION) {
+                // Make it disappear
+                int id = getResources().getIdentifier("btn_Num" + c, "id", getPackageName());
+                ((Button) findViewById(id)).setText("");
             }
         }
     }

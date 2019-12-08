@@ -130,6 +130,24 @@ public class Grid implements Cloneable {
     }
 
     /**
+     * Returns how many cells a given token has on board.
+     * For instance, if there are 16 As on grid, it returns 16.
+     * @param token the token to check for
+     * @return the number of instances it has on board
+     */
+    public int getNumberOfInstancesOnBoard(char token) {
+        int count = 0;
+        for (int i = 0; i < this.DIMENSION; i++) {
+            for (int j = 0; j < this.DIMENSION; j++) {
+                if (this.cells[i][j].value == Integer.parseInt("" + token, 16)) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    /**
      * Get a line in grid.
      * @param pos position of the line
      * @param vertical if the line is vertical
