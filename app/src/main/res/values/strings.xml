@@ -1,5 +1,9 @@
 <resources>
     <string name="app_name">SudokuForProgrammer</string>
+    <string name="app_saved_game">saved_game</string>
+
+    <string name="start_new_game">new</string>
+    <string name="continue_game">continue</string>
 
     <string name="app_title_1">&lt;Programer</string>
     <string name="app_title_2">Sudoku\/&gt;</string>

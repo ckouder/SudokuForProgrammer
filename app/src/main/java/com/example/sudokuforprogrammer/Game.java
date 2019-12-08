@@ -32,16 +32,16 @@ public class Game implements Serializable {
      * 2. Stop/End
      * 3. Reset
      */
-    public class Timer {
+    public class Timer implements Serializable{
 
         /** Amount of time in ms recorded by Timer. */
-        public long time;
+        private long time;
 
         /** Start time of the timer. */
-        public long start;
+        private long start;
 
         /** End time of the timer. */
-        public long end;
+        private long end;
 
         /** Whether the timer is running. */
         public boolean isRunning;

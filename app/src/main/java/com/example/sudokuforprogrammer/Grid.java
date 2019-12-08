@@ -1,12 +1,13 @@
 package com.example.sudokuforprogrammer;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /** A class to represent the Sudoku grid. */
-public class Grid implements Cloneable {
+public class Grid implements Cloneable, Serializable {
 
     /** A class to encapsulate one Sudoku cell. */
-    public class Cell {
+    public class Cell implements Serializable {
 
         /** Numerical value of the cell. */
         public int value;
