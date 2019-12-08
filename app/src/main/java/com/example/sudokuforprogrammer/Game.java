@@ -9,6 +9,7 @@ import com.example.sudokuforprogrammer.sudokuMatrixGenerator.SudokuMatrix;
  * 1. Difficulty: Will be set to easy, because it's already pretty hard.
  * 2. Answer Grid: The answer to the puzzle, will not change after being initialized.
  * 3. Puzzle Grid: The puzzle that is presented to the user at the beginning of the game.
+ * 4. Pointer: Indicates which cell is currently selected.
  */
 public class Game implements Serializable {
 
@@ -20,6 +21,9 @@ public class Game implements Serializable {
 
     /** The initial state of the game, will change as the user plays. */
     public Grid puzzleGrid;
+
+    /** pointer that stored [int row, int col] pair. */
+    public int[] pointer = new int[2];
 
     /**
      * A class to represent timer.
@@ -113,11 +117,10 @@ public class Game implements Serializable {
      */
     private void takeARandomCellOut() {
         Random random = new Random();
-        // Flag for whether the removal action is done.
-        boolean done = false;
-        while (!done) {
-            int row = random.nextInt(16);
-            int column = random.nextInt(16);
+        // Keep removing blocks
+        while (true) {
+            int row = random.nextInt(Grid.DIMENSION);
+            int column = random.nextInt(Grid.DIMENSION);
             // If this is not an empty cell
             if (this.puzzleGrid.cells[row][column].value != -1) {
                 // Store the value in case things don't work out well.
@@ -127,7 +130,7 @@ public class Game implements Serializable {
                 this.puzzleGrid.cells[row][column].confirmed = false;
                 if (Solver.solve(puzzleGrid, System.currentTimeMillis())) {
                     // If it can be solved, done
-                    done = true;
+                    return;
                 } else {
                     // Else revert back
                     this.puzzleGrid.cells[row][column].value = savedValue;
