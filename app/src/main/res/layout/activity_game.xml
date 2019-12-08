@@ -89,6 +89,7 @@
             android:text="00:00"
             android:textColor="@color/colorPrimary__70"
             android:textSize="@dimen/font_size__h4"
+            android:visibility="invisible"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btn_gameTimerControl"
             app:layout_constraintTop_toTopOf="parent" />
@@ -100,11 +101,11 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
             android:backgroundTint="@color/colorBackground"
-            android:tag="shown"
+            android:tag="@string/game_timer_state_hided"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/btn_gameControl"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_timer_show" />
+            app:srcCompat="@drawable/ic_timer_hide" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TableLayout
