@@ -3,16 +3,27 @@ package com.example.sudokuforprogrammer;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Typeface;
+import android.graphics.fonts.FontFamily;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.ContextThemeWrapper;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import org.apache.pig.impl.util.ObjectSerializer;
+import org.w3c.dom.Text;
+
+import java.io.IOException;
+import java.io.Serializable;
 
 public class NewGameActivity extends AppCompatActivity
         implements SudokuBlock.OnFragmentInteractionListener {
@@ -27,7 +38,13 @@ public class NewGameActivity extends AppCompatActivity
         setContentView(R.layout.activity_game);
 
         // Initialize a new game
-        this.game = new Game();
+        Intent intent = getIntent();
+        String gameType = intent.getStringExtra("game");
+        if (gameType == null || gameType.equals(getString(R.string.start_new_game))) {
+            this.game = new Game();
+        } else if (gameType.equals(getString(R.string.continue_game))) {
+            this.game = (Game) intent.getExtras().get("gameContent");
+        }
         setEventListenersForNumberButtons();
         setEventListenersForGameControlButtons();
         setEventListenersForDirectionButtons();
@@ -64,6 +81,37 @@ public class NewGameActivity extends AppCompatActivity
                 timerControlButton.setTag(TIMER_IS_SHOWN);
             }
         });
+
+        // set listener for quit Button
+        quitButton.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.dialog);
+            builder.setTitle("<Are you sure?/>")
+                    .setMessage("We'll save your game for your return.")
+                    .setNegativeButton("Let me think", (DialogInterface dialog, int id) -> { })
+                    .setPositiveButton("I'm determined", (DialogInterface dialog, int id) -> {
+                        Intent mainMenu = new Intent(this, MainActivity.class);
+                        save(game);
+                        startActivity(mainMenu);
+                        finish();
+                    });
+            builder.create();
+            AlertDialog quitDialog = builder.show();
+            // no better way to set its font family
+            ((TextView) quitDialog.findViewById(android.R.id.message)).setTextAppearance(R.style.AppTheme);
+        });
+
+        // set listener for game control button
+        gameControlButton.setOnClickListener(v -> {
+            if (game.timer.isRunning) {
+                game.timer.pause();
+                gameControlButton.setImageDrawable(getDrawable(R.drawable.ic_resume));
+                // TODO erase grid
+            } else {
+                game.timer.start();
+                gameControlButton.setImageDrawable(getDrawable(R.drawable.ic_pause));
+                // TODO recover grid
+            }
+        });
     }
 
     /** Set event listeners for each token used in game. */
@@ -78,6 +126,7 @@ public class NewGameActivity extends AppCompatActivity
     public void setEventListenersForDirectionButtons() {
         // Set event listener for left button.
         Button left = findViewById(R.id.sudokuControlLeft);
+        // TODO: set long click listener
         left.setOnClickListener(v -> {
             // If exceeds boundary, revert
             if (--game.pointer[1] < 0) {
@@ -86,6 +135,7 @@ public class NewGameActivity extends AppCompatActivity
             renderGrid();
         });
         // Set event listener for down button.
+        // TODO: set long click listener
         Button down = findViewById(R.id.sudokuControlDown);
         down.setOnClickListener(v -> {
             // If exceeds boundary, revert
@@ -95,6 +145,7 @@ public class NewGameActivity extends AppCompatActivity
             renderGrid();
         });
         // Set event listener for up button.
+        // TODO: set long click listener
         Button up = findViewById(R.id.sudokuControlUp);
         up.setOnClickListener(v -> {
             // If exceeds boundary, revert
@@ -104,6 +155,7 @@ public class NewGameActivity extends AppCompatActivity
             renderGrid();
         });
         // Set event listener for right button.
+        // TODO: set long click listener
         Button right = findViewById(R.id.sudokuControlRight);
         right.setOnClickListener(v -> {
             // If exceeds boundary, revert
@@ -132,15 +184,28 @@ public class NewGameActivity extends AppCompatActivity
             renderGrid();
             // If the user wins, open up a new dialogue which redirects back to main menu
             if (game.puzzleGrid.isSolved()) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(this);
-                builder.setMessage("Congratulations! You have finished the puzzle!")
+                AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.dialog);
+                builder.setTitle("<Congrat!/>")
+                        .setMessage("You have finished the puzzle!")
                         .setPositiveButton("OK", (DialogInterface dialog, int id) -> {
                             Intent mainMenu = new Intent(this, MainActivity.class);
                             startActivity(mainMenu);
                             finish();
                         });
+                SharedPreferences store = getSharedPreferences(getString(R.string.app_saved_game), MODE_PRIVATE);
+                SharedPreferences.Editor storeEditor = store.edit();
+                try {
+                    //TODO: determine if the saved game is the same as finished one
+                    storeEditor.putString(getString(R.string.app_saved_game), ObjectSerializer.serialize(null));
+                    storeEditor.apply();
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 builder.create();
-                builder.show();
+                AlertDialog finishDialog = builder.show();
+                // no better way to set its font family
+                ((TextView) finishDialog.findViewById(android.R.id.message)).setTextAppearance(R.style.AppTheme);
             }
         }
         // Else… Do nothing for the moment being
@@ -220,6 +285,23 @@ public class NewGameActivity extends AppCompatActivity
                 int id = getResources().getIdentifier("btn_Num" + c, "id", getPackageName());
                 ((Button) findViewById(id)).setText("");
             }
+        }
+    }
+
+    /**
+     * <E> Save game to sharedPreference
+     */
+    public void save(Serializable something) {
+        SharedPreferences store = getSharedPreferences(getString(R.string.app_saved_game), MODE_PRIVATE);
+        SharedPreferences.Editor storeEditor = store.edit();
+
+        try {
+            storeEditor.putString(getString(R.string.app_saved_game), ObjectSerializer.serialize(something));
+            storeEditor.apply();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "<error>Save game failed.</error>", Toast.LENGTH_SHORT).show();
         }
     }
 }

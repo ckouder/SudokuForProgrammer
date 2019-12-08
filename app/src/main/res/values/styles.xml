@@ -68,8 +68,23 @@
 
     <!--dialog theme-->
     <style name="dialog" parent="Theme.AppCompat.Dialog">
-        <item name="android:windowBackground">@color/colorBackground</item>
+        <item name="android:windowBackground">@drawable/border__normal</item>
         <item name="android:textColor">@color/colorPrimary__100</item>
+        <item name="android:textColorPrimary">@color/colorPrimary__100</item>
+        <item name="android:windowTitleStyle">@style/dialog.title</item>
+        <item name="android:textFontWeight">@integer/font_weight__bold</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+
+    <style name="dialog.title">
+        <item name="android:textSize">@dimen/font_size__h3</item>
+        <item name="android:textFontWeight">@integer/font_weight__bold</item>
+        <item name="android:textColor">@color/colorPrimary__100</item>
+    </style>
+
+    <style name="dialog.text">
+        <item name="android:fontFamily">@font/pt_mono</item>
+        <item name="android:textSize">@dimen/font_size__body</item>
     </style>
 
 </resources>

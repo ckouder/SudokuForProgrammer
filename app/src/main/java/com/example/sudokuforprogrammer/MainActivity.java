@@ -6,6 +6,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -22,8 +23,11 @@ import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.apache.pig.impl.util.ObjectSerializer;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -56,9 +60,33 @@ public class MainActivity extends AppCompatActivity {
         newGameButton.setOnClickListener(v -> {
             Intent newGameActivity = new Intent(this, NewGameActivity.class);
             // @CHANGE
+            newGameActivity.putExtra("game", getString(R.string.start_new_game));
             newGameActivity.putExtra("difficulty", 36);
             startActivity(newGameActivity);
         });
+
+        // Process of continuing a saved game
+        Button continueGameButton = findViewById(R.id.btn_mainContinue);
+        SharedPreferences savedGame = getSharedPreferences(getString(R.string.app_saved_game), MODE_PRIVATE);
+        try {
+            Game gameObject = (Game) ObjectSerializer.deserialize(savedGame.getString(
+                    getString(R.string.app_saved_game), null));
+
+            if (gameObject == null) {
+                continueGameButton.setVisibility(View.INVISIBLE);
+            } else {
+                continueGameButton.setOnClickListener(v -> {
+                    System.out.println("continue button is clicked");
+                    Intent newGameActivity = new Intent(this, NewGameActivity.class);
+                    // @CHANGE
+                    newGameActivity.putExtra("game", getString(R.string.continue_game));
+                    newGameActivity.putExtra("gameContent", gameObject);
+                    startActivity(newGameActivity);
+                });
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
         renderQuote();
     }
@@ -76,8 +104,19 @@ public class MainActivity extends AppCompatActivity {
 
             response -> {
                 try {
-                    quoteContentContainer.setText(formatQuote(response.getString("quoteText"), QUOTATION_TYPE_CONTENT));
-                    quoteAuthorContainer.setText(formatQuote(response.getString("quoteAuthor"), QUOTATION_TYPE_AUTHOR));
+                    String quoteContent = formatQuote(response.getString("quoteText"), QUOTATION_TYPE_CONTENT);
+                    String quoteAuthor = formatQuote(response.getString("quoteAuthor"), QUOTATION_TYPE_AUTHOR);
+                    if (!quoteContent.equals("")) {
+                        quoteContentContainer.setText(quoteContent);
+                    } else {
+                        quoteContentContainer.setText(getResources().getText(R.string.quote_content_default));
+                        quoteAuthorContainer.setText(getResources().getText(R.string.quote_author_default));
+                    }
+                    if (!quoteAuthor.equals("")) {
+                        quoteAuthorContainer.setText(formatQuote(response.getString("quoteAuthor"), QUOTATION_TYPE_AUTHOR));
+                    } else {
+                        quoteAuthorContainer.setText(formatQuote("Anonymous", QUOTATION_TYPE_AUTHOR));
+                    }
 
                 } catch (JSONException e) {
                     e.printStackTrace();

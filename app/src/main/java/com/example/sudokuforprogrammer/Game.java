@@ -1,5 +1,6 @@
 package com.example.sudokuforprogrammer;
 
+import java.io.Serializable;
 import java.util.Random;
 import com.example.sudokuforprogrammer.sudokuMatrixGenerator.SudokuMatrix;
 
@@ -10,7 +11,7 @@ import com.example.sudokuforprogrammer.sudokuMatrixGenerator.SudokuMatrix;
  * 3. Puzzle Grid: The puzzle that is presented to the user at the beginning of the game.
  * 4. Pointer: Indicates which cell is currently selected.
  */
-public class Game {
+public class Game implements Serializable {
 
     /** The difficulty of the game. */
     public final int DIFFICULTY = Constants.DIFFICULTY_EASY;
@@ -31,16 +32,16 @@ public class Game {
      * 2. Stop/End
      * 3. Reset
      */
-    public class Timer {
+    public class Timer implements Serializable{
 
         /** Amount of time in ms recorded by Timer. */
-        public long time;
+        private long time;
 
         /** Start time of the timer. */
-        public long start;
+        private long start;
 
         /** End time of the timer. */
-        public long end;
+        private long end;
 
         /** Whether the timer is running. */
         public boolean isRunning;
