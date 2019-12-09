@@ -112,8 +112,9 @@ public class MainActivity extends AppCompatActivity {
                         quoteContentContainer.setText(getResources().getText(R.string.quote_content_default));
                         quoteAuthorContainer.setText(getResources().getText(R.string.quote_author_default));
                     }
-                    if (!quoteAuthor.equals("")) {
-                        quoteAuthorContainer.setText(formatQuote(response.getString("quoteAuthor"), QUOTATION_TYPE_AUTHOR));
+                    System.out.println("[" + quoteAuthor.trim() + "]");
+                    if (!quoteAuthor.trim().equals("")) {
+                        quoteAuthorContainer.setText(quoteAuthor);
                     } else {
                         quoteAuthorContainer.setText(formatQuote("Anonymous", QUOTATION_TYPE_AUTHOR));
                     }
@@ -137,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
 
     private String formatQuote(String rawString, String formatType) {
         if (formatType.equals(QUOTATION_TYPE_CONTENT)) {
-            return "\"" + rawString + "\"";
+            return "\"" + rawString.trim() + "\"";
 
         } else if (formatType.equals(QUOTATION_TYPE_AUTHOR)) {
             return "by " + rawString;

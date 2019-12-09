@@ -9,6 +9,7 @@ import android.graphics.fonts.FontFamily;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.ContextThemeWrapper;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -284,6 +285,8 @@ public class NewGameActivity extends AppCompatActivity
                 // Make it disappear
                 int id = getResources().getIdentifier("btn_Num" + c, "id", getPackageName());
                 ((Button) findViewById(id)).setText("");
+                // Let it do nothing
+                ((Button) findViewById(id)).setOnClickListener(v -> { });
             }
         }
     }
