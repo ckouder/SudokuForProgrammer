@@ -284,6 +284,8 @@ public class NewGameActivity extends AppCompatActivity
                 // Make it disappear
                 int id = getResources().getIdentifier("btn_Num" + c, "id", getPackageName());
                 ((Button) findViewById(id)).setText("");
+                // Let it do nothing
+                ((Button) findViewById(id)).setOnClickListener(v -> { });
             }
         }
     }
