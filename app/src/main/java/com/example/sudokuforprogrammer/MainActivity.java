@@ -1,7 +1,5 @@
 package com.example.sudokuforprogrammer;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Dialog;
@@ -29,7 +27,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends ImmersiveActicity {
 
     private static final String QUOTATION_URL = "https://api.forismatic.com/api/1.0/?method=getQuote&key=4&format=json&lang=en";
 
@@ -90,7 +88,6 @@ public class MainActivity extends AppCompatActivity {
 
         renderQuote();
     }
-
 
     private void renderQuote() {
         final TextView quoteContentContainer = findViewById(R.id.text_mainMaxim);
