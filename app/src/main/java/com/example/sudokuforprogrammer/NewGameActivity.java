@@ -26,7 +26,7 @@ import org.w3c.dom.Text;
 import java.io.IOException;
 import java.io.Serializable;
 
-public class NewGameActivity extends AppCompatActivity
+public class NewGameActivity extends ImmersiveActicity
         implements SudokuBlock.OnFragmentInteractionListener {
 
     /** The game object. */
@@ -186,7 +186,7 @@ public class NewGameActivity extends AppCompatActivity
             // If the user wins, open up a new dialogue which redirects back to main menu
             if (game.puzzleGrid.isSolved()) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.dialog);
-                builder.setTitle("<Congrat!/>")
+                builder.setTitle("<Congrats!/>")
                         .setMessage("You have finished the puzzle!")
                         .setPositiveButton("OK", (DialogInterface dialog, int id) -> {
                             Intent mainMenu = new Intent(this, MainActivity.class);

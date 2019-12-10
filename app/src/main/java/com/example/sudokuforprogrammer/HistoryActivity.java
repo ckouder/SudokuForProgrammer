@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
 
-public class HistoryActivity extends AppCompatActivity {
+public class HistoryActivity extends ImmersiveActicity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

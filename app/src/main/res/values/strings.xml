@@ -11,7 +11,7 @@
     <string name="quote_content_default">"All or none. "</string>
     <string name="quote_author_default">by Game Creator</string>
 
-    <string name="game_quit">:q</string>
+    <string name="game_quit">:wq</string>
     <string name="game_timer_state_shown">shown</string>
     <string name="game_timer_state_hided">hided</string>
 

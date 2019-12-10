@@ -50,7 +50,7 @@
         <Button
             android:id="@+id/btn_gameQuit"
             style="@style/button__lg"
-            android:layout_width="31dp"
+            android:layout_width="53dp"
             android:layout_height="31dp"
             android:layout_marginStart="@dimen/margin__2x"
             android:background="@color/colorBackground"
@@ -110,8 +110,8 @@
 
     <TableLayout
         android:id="@+id/sudokuPaper"
-        android:layout_width="@dimen/size_sudokuPaperLength"
-        android:layout_height="@dimen/size_sudokuPaperLength"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:background="@drawable/border__normal__70"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
