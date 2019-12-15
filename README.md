@@ -10,9 +10,9 @@ Source code of android Hex-base Sudoku App ~~for programmers~~ with classical te
 
 ## Screenshots
 
-<img src="/Users/bingjiguo/AndroidStudioProjects/SudokuForProgrammer/screenshot_1.png" alt="image-20191215162849392" style="zoom:50%;" />
+<img src="screenshot_1.png" alt="image-20191215162849392" style="zoom:50%;" />
 
-<img src="/Users/bingjiguo/AndroidStudioProjects/SudokuForProgrammer/screenshot_2.png" alt="image-20191215163051054" style="zoom:50%;" />
+<img src="screenshot_2.png" alt="image-20191215163051054" style="zoom:50%;" />
 
 ## Todos
 
