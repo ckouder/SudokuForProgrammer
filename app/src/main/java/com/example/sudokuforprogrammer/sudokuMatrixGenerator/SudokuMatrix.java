@@ -42,27 +42,6 @@ public class SudokuMatrix {
     private Chain<ArrayList<Character>> posTokensChain = new Chain<>();
 
     /**
-     * Initialize a SudokuMatrix.
-     * 
-     * @param setBlockSize unit block size of the matrix
-     * @throws Exception if block size is too big
-     */
-    public SudokuMatrix(final int setBlockSize) throws Exception {
-        if (setBlockSize > 16) {
-            throw new Exception("block size [" + setBlockSize + "] is too large");
-        }
-        blockSize = setBlockSize;
-        size = (int) Math.pow(blockSize, 2);
-        tokens = new char[size];
-        // fill up tokens list
-        for (int i = 0; i < size; i++) {
-            final char token = (char) (i + TOKEN_START_POINT);
-            tokens[i] = token;
-        }
-        initialize();
-    }
-
-    /**
      * Initialise a SudokuMatrix with given tokens.
      * @param setBlockSize unit block size of the matrix
      * @param tokenList list of tokens used as sudoku tokens
@@ -72,16 +51,31 @@ public class SudokuMatrix {
         if (setBlockSize > 16) {
             throw new Exception("block size [" + setBlockSize + "] is too large");
         }
-        blockSize = setBlockSize;
-
-        size = (int) Math.pow(blockSize, 2);
-
-        if (tokenList.length != size) {
+        if (tokenList.length != setBlockSize * setBlockSize) {
             throw new Exception("token list length doesn't match sudoku size");
         }
+        blockSize = setBlockSize;
+        size = (int) Math.pow(blockSize, 2);
         tokens = tokenList;
 
         initialize();
+    }
+
+    /**
+     * Create sudokuMatrix with default tokens
+     * @param setBlockSize unit block size of the matrix
+     * @return SudokuMatrix
+     * @throws Exception if block size is too big
+     */
+    public static SudokuMatrix createWithDefaultTokens(final int setBlockSize) throws Exception {
+        char[] tokens = new char[] {
+                'A', 'B', 'C', 'D',
+                'E', 'F', 'G', 'H',
+                'I', 'J', 'K', 'L',
+                'M', 'N', 'O', 'P'
+        };
+
+        return new SudokuMatrix(setBlockSize, tokens);
     }
 
     /**
