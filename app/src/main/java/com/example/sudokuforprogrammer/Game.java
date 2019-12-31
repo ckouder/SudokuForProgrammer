@@ -86,9 +86,14 @@ public class Game implements Serializable {
             this.answerGrid = new Grid(charGridToIntGrid(charGrid));
             // Initialize the puzzle grid
             this.puzzleGrid = this.answerGrid.clone();
+            // @DEBUG
+            long start = System.currentTimeMillis();
             while (this.puzzleGrid.getNumberOfEmptyCells() < this.DIFFICULTY) {
                 takeARandomCellOut();
             }
+            long end = System.currentTimeMillis();
+            System.out.println("Puzzle generation used " + (end - start) + "ms.");
+            // @DEBUG END
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -128,7 +133,7 @@ public class Game implements Serializable {
                 // Remove it, copy the change to puzzleGrid, and flip the flag
                 this.puzzleGrid.cells[row][column].value = -1;
                 this.puzzleGrid.cells[row][column].confirmed = false;
-                if (Solver.solve(puzzleGrid, System.currentTimeMillis())) {
+                if (Solver.solve(puzzleGrid)) {
                     // If it can be solved, done
                     return;
                 } else {
@@ -148,7 +153,7 @@ public class Game implements Serializable {
         Game newGame = new Game();
         newGame.puzzleGrid.printGrid();
         System.out.println("Final Puzzle!");
-        Solver.solve(newGame.puzzleGrid, System.currentTimeMillis());
+        Solver.solve(newGame.puzzleGrid);
     }
 
 }
