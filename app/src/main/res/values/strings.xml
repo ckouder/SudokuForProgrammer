@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">SudokuForProgrammer</string>
     <string name="app_saved_game">saved_game</string>
+    <string name="app_highest_score">highest_score</string>
+    <string name="highest_score_date">highest_score_date</string>
 
     <string name="start_new_game">new</string>
     <string name="continue_game">continue</string>

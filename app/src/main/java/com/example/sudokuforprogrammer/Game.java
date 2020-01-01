@@ -1,5 +1,7 @@
 package com.example.sudokuforprogrammer;
 
+import androidx.annotation.Nullable;
+
 import java.io.Serializable;
 import java.util.Random;
 import java.util.Timer;
@@ -15,6 +17,8 @@ import com.example.sudokuforprogrammer.sudokuMatrixGenerator.SudokuMatrix;
  * 4. Pointer: Indicates which cell is currently selected.
  */
 public class Game implements Serializable {
+
+    private final double gameId = Math.random();
 
     /** The difficulty of the game. */
     public final int DIFFICULTY = Constants.DIFFICULTY_EASY;
@@ -102,6 +106,18 @@ public class Game implements Serializable {
         }
         this.timer = new Timer();
         this.timer.start();
+    }
+    
+    public boolean equals(Game obj) {
+        return obj.getId() == gameId;
+    }
+
+    /**
+     * get id of the game.
+     * @return double game id
+     */
+    public double getId() {
+        return gameId;
     }
 
     /**

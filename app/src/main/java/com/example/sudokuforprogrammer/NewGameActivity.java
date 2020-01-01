@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.graphics.fonts.FontFamily;
+import android.icu.text.SimpleDateFormat;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -27,6 +28,8 @@ import org.w3c.dom.Text;
 import java.io.IOException;
 import java.io.Serializable;
 import java.sql.Time;
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -223,12 +226,33 @@ public class NewGameActivity extends AppCompatActivity
                             startActivity(mainMenu);
                             finish();
                         });
-                SharedPreferences store = getSharedPreferences(getString(R.string.app_saved_game), MODE_PRIVATE);
-                SharedPreferences.Editor storeEditor = store.edit();
+                timerHandler.removeCallbacks(timeRunnable);
+                SharedPreferences savedGame = getSharedPreferences(getString(
+                        R.string.app_saved_game), MODE_PRIVATE);
+                SharedPreferences highestScore = getSharedPreferences(getString(
+                        R.string.app_highest_score), MODE_PRIVATE);
+                SharedPreferences.Editor savedGameEditor = savedGame.edit();
+                SharedPreferences.Editor highestScoreEditor = highestScore.edit();
                 try {
-                    //TODO: determine if the saved game is the same as finished one
-                    storeEditor.putString(getString(R.string.app_saved_game), ObjectSerializer.serialize(null));
-                    storeEditor.apply();
+                    // erase game storage if stored game is finished
+                    Game gameObject = (Game) ObjectSerializer.deserialize(savedGame.getString(
+                            getString(R.string.app_saved_game), null));
+
+                    if (gameObject != null && gameObject.getId() == game.getId()){
+                        savedGameEditor.putString(getString(R.string.app_saved_game), ObjectSerializer.serialize(null));
+                        savedGameEditor.apply();
+                    }
+
+                    // calculate highest score
+                    long previousHighestScore = highestScore.getLong(getString(R.string.app_highest_score), 0);
+                    if (previousHighestScore == 0 || previousHighestScore > game.timer.getTime()) {
+                        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                        Date date = new Date();
+
+                        highestScoreEditor.putLong(getString(R.string.app_highest_score), game.timer.getTime());
+                        highestScoreEditor.putString(getString(R.string.highest_score_date), dateFormat.format(date));
+                        highestScoreEditor.apply();
+                    }
 
                 } catch (IOException e) {
                     e.printStackTrace();
