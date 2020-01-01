@@ -2,6 +2,9 @@ package com.example.sudokuforprogrammer;
 
 import java.io.Serializable;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
+
 import com.example.sudokuforprogrammer.sudokuMatrixGenerator.SudokuMatrix;
 
 /**
@@ -69,7 +72,7 @@ public class Game implements Serializable {
          * @return time recorded
          */
         public long getTime() {
-            return isRunning ? time + (System.currentTimeMillis() - start) : time;
+            return isRunning? time + (System.currentTimeMillis() - start) : time;
         }
 
     }

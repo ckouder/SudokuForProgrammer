@@ -11,6 +11,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.android.volley.NetworkResponse;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -27,7 +29,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 
-public class MainActivity extends ImmersiveActicity {
+public class MainActivity extends AppCompatActivity {
 
     private static final String QUOTATION_URL = "https://api.forismatic.com/api/1.0/?method=getQuote&key=4&format=json&lang=en";
 

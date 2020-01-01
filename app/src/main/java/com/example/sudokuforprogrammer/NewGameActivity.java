@@ -8,6 +8,7 @@ import android.graphics.Typeface;
 import android.graphics.fonts.FontFamily;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.ContextThemeWrapper;
 import android.view.MotionEvent;
 import android.view.View;
@@ -25,12 +26,42 @@ import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.sql.Time;
+import java.util.Locale;
+import java.util.Timer;
+import java.util.TimerTask;
 
-public class NewGameActivity extends ImmersiveActicity
+public class NewGameActivity extends AppCompatActivity
         implements SudokuBlock.OnFragmentInteractionListener {
 
     /** The game object. */
     public Game game;
+
+    private Button quitButton;
+    private TextView timerText;
+    private ImageButton timerControlButton;
+    private ImageButton gameControlButton;
+
+    private Button left;
+    private Button right;
+    private Button up;
+    private Button down;
+
+    private TableLayout gridUI;
+
+    private Handler timerHandler = new Handler();
+
+    private Runnable timeRunnable = new Runnable() {
+        @Override
+        public void run() {
+            int timeInSeconds = (int) game.timer.getTime() / 1000;
+            int minutes = timeInSeconds / 60;
+            int seconds = timeInSeconds % 60;
+            timerText.setText(String.format(Locale.US,"%02d:%02d", minutes, seconds));
+
+            timerHandler.postDelayed(this, 500);
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,19 +83,16 @@ public class NewGameActivity extends ImmersiveActicity
 
         // Update UI
         renderGrid();
-
     }
 
-    public void onFragmentInteraction(Uri uri) {
-
-    }
+    public void onFragmentInteraction(Uri uri) { }
 
     /** Set event listeners for game control buttons. */
     public void setEventListenersForGameControlButtons() {
-        Button quitButton = findViewById(R.id.btn_gameQuit);
-        TextView timerText = findViewById(R.id.text_timer);
-        ImageButton timerControlButton = findViewById(R.id.btn_gameTimerControl);
-        ImageButton gameControlButton = findViewById(R.id.btn_gameControl);
+        quitButton = findViewById(R.id.btn_gameQuit);
+        timerText = findViewById(R.id.text_timer);
+        timerControlButton = findViewById(R.id.btn_gameTimerControl);
+        gameControlButton = findViewById(R.id.btn_gameControl);
 
         // set listener for timer control
         final String TIMER_IS_SHOWN = getResources().getString(R.string.game_timer_state_shown);
@@ -75,11 +103,13 @@ public class NewGameActivity extends ImmersiveActicity
                 timerText.setVisibility(View.INVISIBLE);
                 timerControlButton.setImageDrawable(getDrawable(R.drawable.ic_timer_hide));
                 timerControlButton.setTag(TIMER_IS_HIDED);
+                timerHandler.removeCallbacks(timeRunnable);
 
             } else if (timerControlButton.getTag().equals(TIMER_IS_HIDED)) {
                 timerText.setVisibility(View.VISIBLE);
                 timerControlButton.setImageDrawable(getDrawable(R.drawable.ic_timer_show));
                 timerControlButton.setTag(TIMER_IS_SHOWN);
+                timerHandler.postDelayed(timeRunnable, 0);
             }
         });
 
@@ -126,7 +156,7 @@ public class NewGameActivity extends ImmersiveActicity
     /** Set event listeners for direction buttons. */
     public void setEventListenersForDirectionButtons() {
         // Set event listener for left button.
-        Button left = findViewById(R.id.sudokuControlLeft);
+        left = findViewById(R.id.sudokuControlLeft);
         // TODO: set long click listener
         left.setOnClickListener(v -> {
             // If exceeds boundary, revert
@@ -137,7 +167,7 @@ public class NewGameActivity extends ImmersiveActicity
         });
         // Set event listener for down button.
         // TODO: set long click listener
-        Button down = findViewById(R.id.sudokuControlDown);
+        down = findViewById(R.id.sudokuControlDown);
         down.setOnClickListener(v -> {
             // If exceeds boundary, revert
             if (++game.pointer[0] >= Grid.DIMENSION) {
@@ -147,7 +177,7 @@ public class NewGameActivity extends ImmersiveActicity
         });
         // Set event listener for up button.
         // TODO: set long click listener
-        Button up = findViewById(R.id.sudokuControlUp);
+        up = findViewById(R.id.sudokuControlUp);
         up.setOnClickListener(v -> {
             // If exceeds boundary, revert
             if (--game.pointer[0] < 0) {
@@ -157,7 +187,7 @@ public class NewGameActivity extends ImmersiveActicity
         });
         // Set event listener for right button.
         // TODO: set long click listener
-        Button right = findViewById(R.id.sudokuControlRight);
+        right = findViewById(R.id.sudokuControlRight);
         right.setOnClickListener(v -> {
             // If exceeds boundary, revert
             if (++game.pointer[1] >= Grid.DIMENSION) {
@@ -216,7 +246,7 @@ public class NewGameActivity extends ImmersiveActicity
     /** Renders the grid with player's current progress. */
     public void renderGrid() {
         // Fetch the grid UI
-        TableLayout gridUI = findViewById(R.id.sudokuPaper);
+        gridUI = findViewById(R.id.sudokuPaper);
         // Renders the grid with 4x4 blocks
         // i indicates a block's row
         for (int i = 0; i < Grid.BASE_INDEX; i++) {
