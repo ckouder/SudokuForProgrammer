@@ -17,9 +17,6 @@ public class Constants {
     /** Difficulty represented as thee number of blocks taken off the grid. */
     final static int DIFFICULTY_EASY = 136;
 
-    /** Tells the program when to abort solving the puzzle. (means no solution) */
-    final static long SOLVE_TIME_LIMIT = 20;
-
     /** Tokens used for representing numerical values in a grid. */
     final static char[] TOKENS = {
             '0', '1', '2', '3',

@@ -42,27 +42,6 @@ public class SudokuMatrix {
     private Chain<ArrayList<Character>> posTokensChain = new Chain<>();
 
     /**
-     * Initialize a SudokuMatrix.
-     * 
-     * @param setBlockSize unit block size of the matrix
-     * @throws Exception if block size is too big
-     */
-    public SudokuMatrix(final int setBlockSize) throws Exception {
-        if (setBlockSize > 16) {
-            throw new Exception("block size [" + setBlockSize + "] is too large");
-        }
-        blockSize = setBlockSize;
-        size = (int) Math.pow(blockSize, 2);
-        tokens = new char[size];
-        // fill up tokens list
-        for (int i = 0; i < size; i++) {
-            final char token = (char) (i + TOKEN_START_POINT);
-            tokens[i] = token;
-        }
-        initialize();
-    }
-
-    /**
      * Initialise a SudokuMatrix with given tokens.
      * @param setBlockSize unit block size of the matrix
      * @param tokenList list of tokens used as sudoku tokens
@@ -72,16 +51,31 @@ public class SudokuMatrix {
         if (setBlockSize > 16) {
             throw new Exception("block size [" + setBlockSize + "] is too large");
         }
-        blockSize = setBlockSize;
-
-        size = (int) Math.pow(blockSize, 2);
-
-        if (tokenList.length != size) {
+        if (tokenList.length != setBlockSize * setBlockSize) {
             throw new Exception("token list length doesn't match sudoku size");
         }
+        blockSize = setBlockSize;
+        size = (int) Math.pow(blockSize, 2);
         tokens = tokenList;
 
         initialize();
+    }
+
+    /**
+     * Create sudokuMatrix with default tokens
+     * @param setBlockSize unit block size of the matrix
+     * @return SudokuMatrix
+     * @throws Exception if block size is too big
+     */
+    public static SudokuMatrix createWithDefaultTokens(final int setBlockSize) throws Exception {
+        char[] tokens = new char[] {
+                'A', 'B', 'C', 'D',
+                'E', 'F', 'G', 'H',
+                'I', 'J', 'K', 'L',
+                'M', 'N', 'O', 'P'
+        };
+
+        return new SudokuMatrix(setBlockSize, tokens);
     }
 
     /**
@@ -149,25 +143,29 @@ public class SudokuMatrix {
     }
 
     /**
-     * get a line of the matrix.
+     * get a row of the matrix.
      * 
      * @param pos      position of the line in the matrix
-     * @param vertical if the wanted line is a column
      * @return a line in the matrix at position [pos]
      */
-    private char[] getLine(final int pos, final boolean vertical) {
-        char[] line = new char[size];
+    private char[] getRow(final int pos) {
+        return paper[pos];
+    }
 
-        if (vertical) {
-            for (int i = 0; i < size; i++) {
-                line[i] = paper[i][pos];
-            }
+    /**
+     * get a column of the matrix.
+     *
+     * @param pos      position of the line in the matrix
+     * @return a line in the matrix at position [pos]
+     */
+    private char[] getColumn(final int pos) {
+        char[] col = new char[size];
 
-        } else {
-            line = paper[pos];
+        for (int i = 0; i < size; i++) {
+            col[i] = paper[i][pos];
         }
 
-        return line;
+        return col;
     }
 
     /**
@@ -178,18 +176,14 @@ public class SudokuMatrix {
      */
     private char[] getBlock(final int[] coordinate) {
         final char[] block = new char[size];
-
         int j = 0;
         for (int row = coordinate[1] * blockSize; row < (coordinate[1] + 1) * blockSize; row++) {
-
             for (int col = coordinate[0] * blockSize; col < (coordinate[0] + 1) * blockSize; col++) {
-
                 block[j] = paper[row][col];
                 j++;
             }
 
         }
-
         return block;
     }
 
@@ -262,16 +256,11 @@ public class SudokuMatrix {
 
         while (true) {
             try {
-
-                // System.out.println("Try filling up [" + coordinate[1] + ", " + coordinate[0] + "]");
-
                 if (fillOne(coordinate)) {
                     coordinate = getNextSlot(coordinate);
-
                 } else {
                     coordinate = getPreviousSlot(coordinate);
                 }
-
                 counter++;
 
                 if (counter > INITIALIZATION_LIMIT) {
@@ -298,20 +287,15 @@ public class SudokuMatrix {
                     "No available slot before [" + coordinate[1] + ", " + coordinate[0] + "].");
         }
 
-        // System.out.println("Finding previous slot for: " + c[1] + ", " + c[0]);
         do {
             if (coordinate[0] == 0 && coordinate[1] > 0) {
                 coordinate[0] = size - 1;
                 coordinate[1] -= 1;
             }
-
             else if (coordinate[1] >= 0) {
                 coordinate[0] -= 1;
             }
-
         } while (!posOutOfBlock(coordinate));
-
-        // System.out.println("Found previous slot: " + c[1] + ", " + c[0] + "\n");
 
         return coordinate;
     }
@@ -329,17 +313,14 @@ public class SudokuMatrix {
                     "No available slot after [" + coordinate[1] + ", " + coordinate[0] + "].");
         }
 
-
         do {
             if (coordinate[0] == size - 1 && coordinate[1] < size - 1) {
                 coordinate[0] = 0;
                 coordinate[1] += 1;
             }
-
             else if (coordinate[1] <= size - 1) {
                 coordinate[0] += 1;
             }
-
         } while (!posOutOfBlock(coordinate));
 
         return coordinate;
@@ -373,8 +354,8 @@ public class SudokuMatrix {
 
         if (ts == null) {
             ArrayList<Character> tokenValues = new ArrayList<>();
-            char[] colValues = getLine(coordinate[0], true);
-            char[] rowValues = getLine(coordinate[1], false);
+            char[] colValues = getColumn(coordinate[0]);
+            char[] rowValues = getRow(coordinate[1]);
             char[] blockValues = getBlock(new int[] { coordinate[0] / blockSize, coordinate[1] / blockSize, });
 
             for (char t : tokens) {

@@ -12,7 +12,7 @@ public class Solver {
     private Solver() {}
 
     /**
-     * Import a Sudoku puzzle from file.
+     * Import a Sudoku puzzle from file. Usually used for internal testing.
      * @param fileName the file that contains the puzzle
      * @return a Sudoku grid
      * @throws FileNotFoundException throws this exception if the puzzle file does not exist
@@ -146,8 +146,10 @@ public class Solver {
     /**
      * Put a given number into place.
      * @param grid the grid to solve
+     * @return whether any grid has been altered
      */
-    public static void step(Grid grid) {
+    public static boolean step(Grid grid) {
+        boolean flag = false;
         // For each cell
         for (int i = 0; i < grid.DIMENSION; i++) {
             for (int j = 0; j < grid.DIMENSION; j++) {
@@ -161,6 +163,8 @@ public class Solver {
                 if (cell.possibilities.size() == 1) {
                     // If the cell only has one possibility (Naked Single Theorem)
                     confirmCell(grid, cell, cell.possibilities.get(0));
+                    // Flip the flag
+                    flag = true;
                     // @DEBUG
                     System.out.printf("Naked single of %s at R%sC%sB%s (from 0)\n",
                             Integer.toHexString(cell.value),
@@ -186,6 +190,7 @@ public class Solver {
                                 || Solver.hiddenSingleInBlock(grid, cell, possibility))
                                 && possibleToAdd(grid, cell, possibility)) {
                             confirmCell(grid, cell, possibility);
+                            flag = true;
                             // @DEBUG
                             System.out.printf("Hidden single of %s at R%sC%sB%s (from 0)\n",
                                     Integer.toHexString(cell.value),
@@ -199,6 +204,7 @@ public class Solver {
                 }
             }
         }
+        return flag;
     }
 
     /**
@@ -342,23 +348,27 @@ public class Solver {
      * A method to solve the puzzle by repeating steps.
      * It is important to create another copy and not damage the data.
      * @param grid the puzzle grid to solve
-     * @param startTime the time of which the solving process starts
      * @return whether the puzzle is solved within time (whether it is solvable)
      */
-    public static boolean solve(Grid grid, long startTime) {
+    public static boolean solve(Grid grid) {
+        long start = System.currentTimeMillis();
         Grid toSolve = grid.clone();
-        while (!toSolve.isSolved()
-                && System.currentTimeMillis() - startTime <= Constants.SOLVE_TIME_LIMIT) {
+        while (!toSolve.isSolved()) {
             // Initialize it at the beginning
             Solver.updatePossibilities(toSolve);
-            // Solve it for one step
-            Solver.step(toSolve);
+            // Solve it for one step, if no cell is filled in a loop, it's not solvable
+            if (!Solver.step(toSolve)) {
+                // @DEBUG
+                System.out.println("Not solvable!");
+                // @DEBUG END
+                return false;
+            }
             // Print it again
             toSolve.printGrid();
         }
         if (toSolve.isSolved()) {
             System.out.printf("Grid is solved in %d ms.\n",
-                    System.currentTimeMillis() - startTime);
+                    System.currentTimeMillis() - start);
         }
         return toSolve.isSolved();
     }
