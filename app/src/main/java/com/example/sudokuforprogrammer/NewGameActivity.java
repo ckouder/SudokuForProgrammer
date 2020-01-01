@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import android.graphics.Typeface;
 import android.graphics.fonts.FontFamily;
 import android.icu.text.SimpleDateFormat;
+import android.media.AudioManager;
+import android.media.SoundPool;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -40,6 +42,7 @@ public class NewGameActivity extends AppCompatActivity
     /** The game object. */
     public Game game;
 
+    // UI elements in new game activity
     private Button quitButton;
     private TextView timerText;
     private ImageButton timerControlButton;
@@ -52,8 +55,13 @@ public class NewGameActivity extends AppCompatActivity
 
     private TableLayout gridUI;
 
-    private Handler timerHandler = new Handler();
+    // Sound effect in new game effect
+    private SoundPool soundPool;
+    private int clickSound;
+    private int fillSound;
+    private float volume = 0.5f;
 
+    private Handler timerHandler = new Handler();
     private Runnable timeRunnable = new Runnable() {
         @Override
         public void run() {
@@ -80,6 +88,12 @@ public class NewGameActivity extends AppCompatActivity
         } else if (gameType.equals(getString(R.string.continue_game))) {
             this.game = (Game) intent.getExtras().get("gameContent");
         }
+
+        // Set up sound effect
+        soundPool = new SoundPool(2, AudioManager.STREAM_MUSIC, 0);
+        fillSound = soundPool.load(this, R.raw.keyboard, 2);
+        clickSound = soundPool.load(this, R.raw.mouse, 1);
+
         setEventListenersForNumberButtons();
         setEventListenersForGameControlButtons();
         setEventListenersForDirectionButtons();
@@ -152,7 +166,10 @@ public class NewGameActivity extends AppCompatActivity
     public void setEventListenersForNumberButtons() {
         for (char c : Constants.TOKENS) {
             int id = getResources().getIdentifier("btn_Num" + c, "id", getPackageName());
-            findViewById(id).setOnClickListener(v -> buttonAction("" + c));
+            findViewById(id).setOnClickListener(v -> {
+                soundPool.play(fillSound, volume, volume, 1, 0, 1.0f);
+                buttonAction("" + c);
+            });
         }
     }
 
@@ -162,6 +179,7 @@ public class NewGameActivity extends AppCompatActivity
         left = findViewById(R.id.sudokuControlLeft);
         // TODO: set long click listener
         left.setOnClickListener(v -> {
+            soundPool.play(clickSound, volume, volume, 1, 0, 1.0f);
             // If exceeds boundary, revert
             if (--game.pointer[1] < 0) {
                 game.pointer[1]++;
@@ -172,6 +190,7 @@ public class NewGameActivity extends AppCompatActivity
         // TODO: set long click listener
         down = findViewById(R.id.sudokuControlDown);
         down.setOnClickListener(v -> {
+            soundPool.play(clickSound, volume, volume, 1, 0, 1.0f);
             // If exceeds boundary, revert
             if (++game.pointer[0] >= Grid.DIMENSION) {
                 game.pointer[0]--;
@@ -182,6 +201,7 @@ public class NewGameActivity extends AppCompatActivity
         // TODO: set long click listener
         up = findViewById(R.id.sudokuControlUp);
         up.setOnClickListener(v -> {
+            soundPool.play(clickSound, volume, volume, 1, 0, 1.0f);
             // If exceeds boundary, revert
             if (--game.pointer[0] < 0) {
                 game.pointer[0]++;
@@ -192,6 +212,7 @@ public class NewGameActivity extends AppCompatActivity
         // TODO: set long click listener
         right = findViewById(R.id.sudokuControlRight);
         right.setOnClickListener(v -> {
+            soundPool.play(clickSound, volume, volume, 1, 0, 1.0f);
             // If exceeds boundary, revert
             if (++game.pointer[1] >= Grid.DIMENSION) {
                 game.pointer[1]--;
@@ -209,6 +230,7 @@ public class NewGameActivity extends AppCompatActivity
         int row = game.pointer[0];
         int column = game.pointer[1];
         int number = Integer.parseInt(option, 16);
+
         // If this is an empty cell and it is the right number indeed…
         if ((game.puzzleGrid.cells[row][column].value == -1
                 && number == game.answerGrid.cells[row][column].value)) {
