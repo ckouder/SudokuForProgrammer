@@ -22,8 +22,9 @@ At the mean time, we are still improving user experience by adding extra functio
 - [X] Finish History activity connectivity
 - [ ] Add long press controller to game control button
 - [ ] What to do if the player makes a mistake
-- [ ] Erase grid if the game is paused
+- [X] Erase grid if the game is paused
+- [ ] Adapative UI settings
 - [ ] OCR sudoku solver
-- [ ] Add sound effects
-  - [ ] Press sudoku unit: [CLICK]
-  - [ ] Press num button: [MECHANIC KEYBOARD]
+- [X] Add sound effects
+  - [X] Press sudoku unit: [CLICK]
+  - [X] Press num button: [MECHANIC KEYBOARD]
