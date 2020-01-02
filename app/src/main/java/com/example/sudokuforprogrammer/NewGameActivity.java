@@ -13,6 +13,9 @@ import android.media.SoundPool;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.style.ForegroundColorSpan;
 import android.view.ContextThemeWrapper;
 import android.view.MotionEvent;
 import android.view.View;
@@ -51,6 +54,8 @@ public class NewGameActivity extends AppCompatActivity
     public Game game;
 
     // UI elements in new game activity
+    private TextView lifeIndicator;
+
     private Button quitButton;
     private TextView timerText;
     private ImageButton timerControlButton;
@@ -109,6 +114,8 @@ public class NewGameActivity extends AppCompatActivity
         clickSound = soundPool.load(this, R.raw.mouse, 1);
 
         // Bind UI components to property
+        lifeIndicator = findViewById(R.id.game_title_1);
+
         quitButton = findViewById(R.id.btn_gameQuit);
         timerText = findViewById(R.id.text_timer);
         timerControlButton = findViewById(R.id.btn_gameTimerControl);
@@ -126,10 +133,12 @@ public class NewGameActivity extends AppCompatActivity
         setEventListenersForGameControlButtons();
         setdirectionButtonActions();
 
+        // recover game states
         if (!game.timer.isRunning) {
             game.timer.start();
         }
         // Update UI
+        renderLife();
         renderGrid();
     }
 
@@ -335,12 +344,36 @@ public class NewGameActivity extends AppCompatActivity
                 }
                 builder.create();
                 AlertDialog finishDialog = builder.show();
+                finishDialog.setCancelable(false);
+                finishDialog.setCanceledOnTouchOutside(false);
                 // no better way to set its font family
                 ((TextView) finishDialog.findViewById(android.R.id.message)).setTextAppearance(R.style.AppTheme);
             }
+        } else if (game.puzzleGrid.cells[row][column].value == -1
+                && number != game.answerGrid.cells[row][column].value) {
+            game.reduceLife();
+            renderLife();
+
+            if (game.life == 0) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.dialog);
+                builder.setTitle("<Oh..No!/>")
+                        .setMessage("Do you wanna try again?")
+                        .setPositiveButton("Sure!", (DialogInterface dialog, int id) -> {
+                            game.reset();
+                            renderLife();
+                            renderGrid();
+                        })
+                        .setNegativeButton("Nope..", (DialogInterface dialog, int id) -> {
+                            Intent mainMenu = new Intent(this, MainActivity.class);
+                            startActivity(mainMenu);
+                            finish();
+                        });
+                AlertDialog failedDialog = builder.show();
+                failedDialog.setCancelable(false);
+                failedDialog.setCanceledOnTouchOutside(false);
+                ((TextView) failedDialog.findViewById(android.R.id.message)).setTextAppearance(R.style.AppTheme);
+            }
         }
-        // Else… Do nothing for the moment being
-        // TODO: Add some code if the player makes a mistake.
     }
 
     /**
@@ -459,6 +492,16 @@ public class NewGameActivity extends AppCompatActivity
                 ((Button) findViewById(id)).setOnClickListener(v -> { });
             }
         }
+    }
+
+    public void renderLife() {
+        String lifeString = lifeIndicator.getText().toString();
+        SpannableString life = new SpannableString(lifeString);
+        life.setSpan(new ForegroundColorSpan(getColor(R.color.colorPrimary__20)),
+                game.life,
+                Constants.LIFE_NUM,
+                Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        lifeIndicator.setText(life, TextView.BufferType.SPANNABLE);
     }
 
     /**

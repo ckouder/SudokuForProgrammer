@@ -5,6 +5,9 @@ public class Constants {
     /** Privatize constructor. */
     private Constants() {}
 
+    /** Life num of the game. */
+    final static int LIFE_NUM = 8;
+
     /** Difficulty represented as thee number of blocks taken off the grid. */
     final static int DIFFICULTY_EXPERT = 181;
 

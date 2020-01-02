@@ -8,7 +8,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorBackground"
     android:paddingLeft="@dimen/margin__2x"
-    android:paddingTop="@dimen/margin__3x"
+    android:paddingTop="@dimen/margin__1x"
     android:paddingBottom="@dimen/margin__1x">
 
     <LinearLayout

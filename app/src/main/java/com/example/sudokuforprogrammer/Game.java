@@ -23,11 +23,17 @@ public class Game implements Serializable {
     /** The difficulty of the game. */
     public final int DIFFICULTY = Constants.DIFFICULTY_EASY;
 
+    /** The life number a player has. */
+    public int life = 1;//Constants.LIFE_NUM;
+
     /** This is the answer to the puzzle. */
     public Grid answerGrid;
 
     /** The initial state of the game, will change as the user plays. */
     public Grid puzzleGrid;
+
+    /** The initial state of the game, will remain unchanged. */
+    public Grid initialGrid;
 
     /** pointer that stored [int row, int col] pair. */
     public int[] pointer = new int[2];
@@ -101,15 +107,32 @@ public class Game implements Serializable {
             long end = System.currentTimeMillis();
             System.out.println("Puzzle generation used " + (end - start) + "ms.");
             // @DEBUG END
+            // Store puzzle grid to initial grid as reset preparation
+            this.initialGrid = this.puzzleGrid.clone();
         } catch (Exception e) {
             e.printStackTrace();
         }
         this.timer = new Timer();
         this.timer.start();
     }
-    
+
+    /**
+     * Compare two games
+     * @param obj gameObject
+     * @return if two gameObject are equal
+     */
     public boolean equals(Game obj) {
         return obj.getId() == gameId;
+    }
+
+    /**
+     * Reset game to initial state.
+     */
+    public void reset() {
+        life = Constants.LIFE_NUM;
+        puzzleGrid = initialGrid.clone();
+        pointer = new int[] { 0, 0 };
+        timer.reset();
     }
 
     /**
@@ -161,6 +184,12 @@ public class Game implements Serializable {
                     this.puzzleGrid.cells[row][column].confirmed = true;
                 }
             }
+        }
+    }
+
+    public void reduceLife() {
+        if (life > 0) {
+            life -= 1;
         }
     }
 
