@@ -1,5 +1,6 @@
 package com.example.sudokuforprogrammer;
 
+import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -29,6 +30,7 @@ import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.lang.reflect.Field;
 import java.sql.Array;
 import java.sql.Time;
 import java.text.DateFormat;
@@ -54,6 +56,7 @@ public class NewGameActivity extends AppCompatActivity
     private ImageButton timerControlButton;
     private ImageButton gameControlButton;
 
+    private String[] directionBtnNames = new String[] { "left", "right", "up", "down" };
     private Button left;
     private Button right;
     private Button up;
@@ -67,6 +70,7 @@ public class NewGameActivity extends AppCompatActivity
     private int fillSound;
     private float volume = 0.5f;
 
+    // Setup handler for timer
     private Handler timerHandler = new Handler();
     private Runnable timeRunnable = new Runnable() {
         @Override
@@ -79,6 +83,10 @@ public class NewGameActivity extends AppCompatActivity
             timerHandler.postDelayed(this, 500);
         }
     };
+
+    // Setup handler for direction button
+    private Handler directionButtonHandler = new Handler();
+    private Runnable directionButtonRunnable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +108,7 @@ public class NewGameActivity extends AppCompatActivity
         fillSound = soundPool.load(this, R.raw.keyboard, 2);
         clickSound = soundPool.load(this, R.raw.mouse, 1);
 
+        // Bind UI components to property
         quitButton = findViewById(R.id.btn_gameQuit);
         timerText = findViewById(R.id.text_timer);
         timerControlButton = findViewById(R.id.btn_gameTimerControl);
@@ -112,9 +121,10 @@ public class NewGameActivity extends AppCompatActivity
         up = findViewById(R.id.sudokuControlUp);
         right = findViewById(R.id.sudokuControlRight);
 
+        // Setup event listeners
         setEventListenersForNumberButtons();
         setEventListenersForGameControlButtons();
-        setEventListenersForDirectionButtons();
+        setdirectionButtonActions();
 
         if (!game.timer.isRunning) {
             game.timer.start();
@@ -192,60 +202,77 @@ public class NewGameActivity extends AppCompatActivity
         }
     }
 
+    public void directionButtonActions(String btnCase) {
+        if (!game.timer.isRunning) {
+            return;
+        }
+        soundPool.play(clickSound, volume, volume, 1, 0, 1.0f);
+        switch (btnCase) {
+            case "left":
+                if (--game.pointer[1] < 0) {
+                    game.pointer[1]++;
+                }
+                break;
+            case "down":
+                if (++game.pointer[0] >= Grid.DIMENSION) {
+                    game.pointer[0]--;
+                }
+                break;
+            case "up":
+                if (--game.pointer[0] < 0) {
+                    game.pointer[0]++;
+                }
+                break;
+            case "right":
+                if (++game.pointer[1] >= Grid.DIMENSION) {
+                    game.pointer[1]--;
+                }
+                break;
+        }
+        renderGrid();
+    }
+
     /** Set event listeners for direction buttons. */
-    public void setEventListenersForDirectionButtons() {
-        // Set event listener for left button.
-        // TODO: set long click listener
-        left.setOnClickListener(v -> {
-            if (!game.timer.isRunning) {
-                return;
-            }
-            soundPool.play(clickSound, volume, volume, 1, 0, 1.0f);
-            // If exceeds boundary, revert
-            if (--game.pointer[1] < 0) {
-                game.pointer[1]++;
-            }
-            renderGrid();
-        });
-        // Set event listener for down button.
-        // TODO: set long click listener
-        down.setOnClickListener(v -> {
-            if (!game.timer.isRunning) {
-                return;
-            }
-            soundPool.play(clickSound, volume, volume, 1, 0, 1.0f);
-            // If exceeds boundary, revert
-            if (++game.pointer[0] >= Grid.DIMENSION) {
-                game.pointer[0]--;
-            }
-            renderGrid();
-        });
-        // Set event listener for up button.
-        // TODO: set long click listener
-        up.setOnClickListener(v -> {
-            if (!game.timer.isRunning) {
-                return;
-            }
-            soundPool.play(clickSound, volume, volume, 1, 0, 1.0f);
-            // If exceeds boundary, revert
-            if (--game.pointer[0] < 0) {
-                game.pointer[0]++;
-            }
-            renderGrid();
-        });
-        // Set event listener for right button.
-        // TODO: set long click listener
-        right.setOnClickListener(v -> {
-            if (!game.timer.isRunning) {
-                return;
-            }
-            soundPool.play(clickSound, volume, volume, 1, 0, 1.0f);
-            // If exceeds boundary, revert
-            if (++game.pointer[1] >= Grid.DIMENSION) {
-                game.pointer[1]--;
-            }
-            renderGrid();
-        });
+    @SuppressLint("ClickableViewAccessibility")
+    public void setdirectionButtonActions() {
+        for (String directionBtnName : directionBtnNames) {
+            try {
+                // get field in class which defines direction button views
+                Field directionBtnField = this.getClass().getDeclaredField(directionBtnName);
+                // because the field is private, we need to manually set its accessibility
+                directionBtnField.setAccessible(true);
+                try {
+                    // get value stored in the field
+                    Button directionBtn = ((Button) directionBtnField.get(this));
+                    // direction button should never be null
+                    assert directionBtn != null;
+                    directionBtn.setOnClickListener(v -> directionButtonActions(directionBtnName));
+                    directionBtn.setOnTouchListener((v, event) -> {
+                        switch (event.getAction()) {
+                            case MotionEvent.ACTION_DOWN:
+                                directionButtonRunnable = new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        directionBtn.performClick();
+                                        directionButtonHandler.postDelayed(
+                                                directionButtonRunnable, 150);
+                                    }
+                                };
+                                directionButtonHandler.postDelayed(
+                                        directionButtonRunnable, 150);
+                                break;
+                            case MotionEvent.ACTION_UP:
+                                directionButtonHandler.removeCallbacks(directionButtonRunnable);
+                                // touch event will intercept the click event by default
+                                // so we need to pass the event to click listener manually
+                                directionBtn.performClick();
+                                break;
+                        }
+                        return true;
+                    });
+                } catch (Exception e) { e.printStackTrace(); }
+            } catch (NoSuchFieldException e1) { e1.printStackTrace(); }
+        }
     }
 
     /**
