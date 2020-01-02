@@ -15,7 +15,7 @@ public class Constants {
     final static int DIFFICULTY_MEDIUM = 161;
 
     /** Difficulty represented as thee number of blocks taken off the grid. */
-    final static int DIFFICULTY_EASY = 2;      //136;
+    final static int DIFFICULTY_EASY = 136;
 
     /** Tokens used for representing numerical values in a grid. */
     final static char[] TOKENS = {
