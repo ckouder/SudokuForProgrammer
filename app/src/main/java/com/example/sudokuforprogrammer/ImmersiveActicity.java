@@ -4,9 +4,7 @@ import android.view.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-/**
- * Adopted from Android Developer.
- */
+/** Adopted from Android Developer. */
 public class ImmersiveActicity extends AppCompatActivity {
     @Override
     public void onWindowFocusChanged(boolean hasFocus) {
