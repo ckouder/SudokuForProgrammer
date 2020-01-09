@@ -5,15 +5,12 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Typeface;
-import android.graphics.fonts.FontFamily;
 import android.icu.text.SimpleDateFormat;
 import android.media.AudioManager;
 import android.media.SoundPool;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.view.ContextThemeWrapper;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -26,23 +23,15 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import org.apache.pig.impl.util.ObjectSerializer;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.Field;
-import java.sql.Array;
-import java.sql.Time;
-import java.text.DateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.function.BiConsumer;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 public class NewGameActivity extends AppCompatActivity
         implements SudokuBlock.OnFragmentInteractionListener {
@@ -124,7 +113,7 @@ public class NewGameActivity extends AppCompatActivity
         // Setup event listeners
         setEventListenersForNumberButtons();
         setEventListenersForGameControlButtons();
-        setdirectionButtonActions();
+        setDirectionButtonActions();
 
         if (!game.timer.isRunning) {
             game.timer.start();
@@ -195,6 +184,8 @@ public class NewGameActivity extends AppCompatActivity
                 return;
             }
             int id = getResources().getIdentifier("btn_Num" + c, "id", getPackageName());
+            // This disables the default sound effect that comes with Android
+            findViewById(id).setSoundEffectsEnabled(false);
             findViewById(id).setOnClickListener(v -> {
                 soundPool.play(fillSound, volume, volume, 1, 0, 1.0f);
                 buttonAction("" + c);
@@ -234,7 +225,7 @@ public class NewGameActivity extends AppCompatActivity
 
     /** Set event listeners for direction buttons. */
     @SuppressLint("ClickableViewAccessibility")
-    public void setdirectionButtonActions() {
+    public void setDirectionButtonActions() {
         for (String directionBtnName : directionBtnNames) {
             try {
                 // get field in class which defines direction button views
@@ -456,7 +447,7 @@ public class NewGameActivity extends AppCompatActivity
                 int id = getResources().getIdentifier("btn_Num" + c, "id", getPackageName());
                 ((Button) findViewById(id)).setText("");
                 // Let it do nothing
-                ((Button) findViewById(id)).setOnClickListener(v -> { });
+                findViewById(id).setOnClickListener(v -> { });
             }
         }
     }
