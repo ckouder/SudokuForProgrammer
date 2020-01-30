@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
             Intent newGameActivity = new Intent(this, NewGameActivity.class);
             // @CHANGE
             newGameActivity.putExtra("game", getString(R.string.start_new_game));
-            newGameActivity.putExtra("difficulty", 36);
+            newGameActivity.putExtra("difficulty", Constants.DIFFICULTY_EASY);
             startActivity(newGameActivity);
         });
 

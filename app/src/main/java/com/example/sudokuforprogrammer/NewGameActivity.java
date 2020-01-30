@@ -1,15 +1,11 @@
 package com.example.sudokuforprogrammer;
 
-import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Typeface;
 import android.graphics.drawable.AnimatedVectorDrawable;
-import android.graphics.drawable.AnimationDrawable;
-import android.graphics.fonts.FontFamily;
 import android.icu.text.SimpleDateFormat;
 import android.media.AudioManager;
 import android.media.SoundPool;
@@ -19,7 +15,6 @@ import android.os.Handler;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.style.ForegroundColorSpan;
-import android.view.ContextThemeWrapper;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -66,8 +61,8 @@ public class NewGameActivity extends AppCompatActivity
 
     // Sound effect in new game effect
     private SoundPool soundPool;
-    private int clickSound;
-    private int fillSound;
+    private int mouseClickedSound;
+    private int keyPressedSound;
     private float volume = 0.5f;
 
     // Setup handler for timer
@@ -101,15 +96,15 @@ public class NewGameActivity extends AppCompatActivity
         Intent intent = getIntent();
         String gameType = intent.getStringExtra("game");
         if (gameType == null || gameType.equals(getString(R.string.start_new_game))) {
-            this.game = new Game();
+            this.game = new Game(intent.getIntExtra("difficulty", Constants.DIFFICULTY_EASY));
         } else if (gameType.equals(getString(R.string.continue_game))) {
             this.game = (Game) intent.getExtras().get("gameContent");
         }
 
         // Set up sound effect
         soundPool = new SoundPool(2, AudioManager.STREAM_MUSIC, 0);
-        fillSound = soundPool.load(this, R.raw.keyboard, 2);
-        clickSound = soundPool.load(this, R.raw.mouse, 1);
+        keyPressedSound = soundPool.load(this, R.raw.keyboard, 2);
+        mouseClickedSound = soundPool.load(this, R.raw.mouse, 1);
 
         // Bind UI components to property
         lifeIndicator = findViewById(R.id.game_title_1);
@@ -205,7 +200,8 @@ public class NewGameActivity extends AppCompatActivity
             // This disables the default sound effect that comes with Android
             findViewById(id).setSoundEffectsEnabled(false);
             findViewById(id).setOnClickListener(v -> {
-                soundPool.play(fillSound, volume, volume, 1, 0, 1.0f);
+                soundPool.play(keyPressedSound, Constants.KEY_PRESSED_VOLUME,
+                        Constants.KEY_PRESSED_VOLUME, 1, 0, 1.0f);
                 buttonAction("" + c);
             });
         }
@@ -215,7 +211,8 @@ public class NewGameActivity extends AppCompatActivity
         if (!game.timer.isRunning) {
             return;
         }
-        soundPool.play(clickSound, volume, volume, 1, 0, 1.0f);
+        soundPool.play(keyPressedSound, Constants.KEY_PRESSED_VOLUME,
+                Constants.KEY_PRESSED_VOLUME, 1, 0, 1.0f);
         switch (btnCase) {
             case "left":
                 if (--game.pointer[1] < 0) {
@@ -394,10 +391,10 @@ public class NewGameActivity extends AppCompatActivity
     }
 
     /**
-     * Execute action on each sudoku unit.
+     * Execute action on each Sudoku cell.
      * @param action action needed
      */
-    public void forEachSudokuUnit(
+    public void forEachSudokuCell(
             BiFunction<View,                /* block view */
                     int[],                  /* block coordinate */
                     BiFunction<
@@ -426,23 +423,26 @@ public class NewGameActivity extends AppCompatActivity
      * Erase grid content when the game is paused.
      */
     public void eraseGrid() {
-        forEachSudokuUnit((block, blockCoordinate) -> (sudokuUnit, cell) -> (cellCoordinate) -> {
-            sudokuUnit.setText(" ");
-            sudokuUnit.setBackgroundColor(getColor(R.color.colorPrimary__50));
+        forEachSudokuCell((block, blockCoordinate) -> (sudokuCell, cell) -> (cellCoordinate) -> {
+            sudokuCell.setText(" ");
+            sudokuCell.setBackgroundColor(getColor(R.color.colorPrimary__50));
         });
     }
 
     /** Renders the grid with player's current progress. */
     public void renderGrid() {
-        forEachSudokuUnit((block, blockCoordinate) -> (sudokuUnit, cell) -> (cellCoordinate) -> {
+        forEachSudokuCell((block, blockCoordinate) -> (sudokuCell, cell) -> (cellCoordinate) -> {
             if (cell.value == -1) {
-                sudokuUnit.setText(" ");
+                sudokuCell.setText(" ");
             } else {
-                sudokuUnit.setText(Integer.toHexString(cell.value).toUpperCase());
+                sudokuCell.setText(Integer.toHexString(cell.value).toUpperCase());
             }
             // Set event listener for each cell
             int blockIndicator = blockCoordinate[0] * Grid.BASE_INDEX + blockCoordinate[1];
-            sudokuUnit.setOnClickListener(v -> {
+            sudokuCell.setOnClickListener(v -> {
+                // Play the sound whenever a cell is selected
+                soundPool.play(mouseClickedSound, Constants.MOUSE_CLICKED_VOLUME,
+                        Constants.MOUSE_CLICKED_VOLUME, 1, 0, 1.0f);
                 if (!game.timer.isRunning) {
                     return;
                 }
@@ -461,25 +461,25 @@ public class NewGameActivity extends AppCompatActivity
             int rowInPuzzle = blockCoordinate[0] * Grid.BASE_INDEX + cellCoordinate[0];
             int columnInPuzzle = blockCoordinate[1] * Grid.BASE_INDEX + cellCoordinate[1];
             if (rowInPuzzle == game.pointer[0] && columnInPuzzle == game.pointer[1]) {
-                sudokuUnit.setBackgroundColor(getColor(R.color.colorPrimary__100));
-                sudokuUnit.setTextColor(getColor(R.color.colorBackground));
+                sudokuCell.setBackgroundColor(getColor(R.color.colorPrimary__100));
+                sudokuCell.setTextColor(getColor(R.color.colorBackground));
                 // Add highlight to cells containing the same numerical value
             } else if (Integer.toHexString(game.puzzleGrid.cells[game.pointer[0]][game.pointer[1]].value)
                     .toUpperCase()
-                    .equals(sudokuUnit.getText())) {
-                sudokuUnit.setTextColor(getColor(R.color.colorPrimary__100));
-                sudokuUnit.setBackground(getDrawable(R.drawable.border__sm__50__with_p_color__20));
+                    .equals(sudokuCell.getText())) {
+                sudokuCell.setTextColor(getColor(R.color.colorPrimary__100));
+                sudokuCell.setBackground(getDrawable(R.drawable.border__sm__50__with_p_color__20));
                 // Add highlight to cells in the same row and column as the current cell
             } else if (rowInPuzzle == game.pointer[0]
                     || columnInPuzzle == game.pointer[1]
                     || (game.pointer[0] / Grid.BASE_INDEX == blockCoordinate[0]
                     && game.pointer[1] / Grid.BASE_INDEX == blockCoordinate[1])) {
-                sudokuUnit.setTextColor(getColor(R.color.colorPrimary__50));
-                sudokuUnit.setBackground(getDrawable(R.drawable.border__sm__50__with_p_color__20));
+                sudokuCell.setTextColor(getColor(R.color.colorPrimary__50));
+                sudokuCell.setBackground(getDrawable(R.drawable.border__sm__50__with_p_color__20));
                 // Remove highlight for all cells that missed the conditions above
             } else {
-                sudokuUnit.setTextColor(getColor(R.color.colorPrimary__50));
-                sudokuUnit.setBackground(getDrawable(R.drawable.border__sm__30));
+                sudokuCell.setTextColor(getColor(R.color.colorPrimary__50));
+                sudokuCell.setBackground(getDrawable(R.drawable.border__sm__30));
             }
         });
 

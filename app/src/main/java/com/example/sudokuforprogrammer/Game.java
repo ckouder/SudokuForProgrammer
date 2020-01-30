@@ -17,7 +17,7 @@ public class Game implements Serializable {
     private final double gameId = Math.random();
 
     /** The difficulty of the game. */
-    public final int DIFFICULTY = Constants.DIFFICULTY_EASY;
+    public int difficulty;
 
     /** The life number a player has. */
     public int life = Constants.LIFE_NUM;
@@ -86,8 +86,11 @@ public class Game implements Serializable {
     /** Timer for the game. */
     public Timer timer;
 
-    /** Constructing a game object. */
-    public Game() {
+    /**
+     * Constructing a game object with the given difficulty.
+     * @param difficulty difficulty of the game
+     */
+    public Game(int difficulty) {
         try {
             // Store the generated Sudoku grid as a 2-D array of char
             char[][] charGrid = new SudokuMatrix(4, Constants.TOKENS).getPaper();
@@ -96,8 +99,9 @@ public class Game implements Serializable {
             // Initialize the puzzle grid
             this.puzzleGrid = this.answerGrid.clone();
             // @DEBUG
+            this.difficulty = difficulty;
             long start = System.currentTimeMillis();
-            while (this.puzzleGrid.getNumberOfEmptyCells() < this.DIFFICULTY) {
+            while (this.puzzleGrid.getNumberOfEmptyCells() < this.difficulty) {
                 takeARandomCellOut();
             }
             long end = System.currentTimeMillis();
@@ -183,9 +187,10 @@ public class Game implements Serializable {
         }
     }
 
+    /** Function that reduces the life of the game by 1. */
     public void reduceLife() {
-        if (life > 0) {
-            life -= 1;
+        if (this.life > 0) {
+            this.life -= 1;
         }
     }
 
@@ -194,7 +199,7 @@ public class Game implements Serializable {
      * @param args useless
      */
     public static void main(String[] args) {
-        Game newGame = new Game();
+        Game newGame = new Game(Constants.DIFFICULTY_EASY);
         newGame.puzzleGrid.printGrid();
         System.out.println("Final Puzzle!");
         Solver.solve(newGame.puzzleGrid);

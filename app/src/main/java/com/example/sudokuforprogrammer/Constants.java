@@ -8,16 +8,16 @@ public class Constants {
     /** Life num of the game. */
     final static int LIFE_NUM = 8;
 
-    /** Difficulty represented as thee number of blocks taken off the grid. */
+    /** Difficulty represented as the number of blocks taken off the grid. */
     final static int DIFFICULTY_EXPERT = 181;
 
-    /** Difficulty represented as thee number of blocks taken off the grid. */
+    /** Difficulty represented as the number of blocks taken off the grid. */
     final static int DIFFICULTY_HARD = 176;
 
-    /** Difficulty represented as thee number of blocks taken off the grid. */
+    /** Difficulty represented as the number of blocks taken off the grid. */
     final static int DIFFICULTY_MEDIUM = 161;
 
-    /** Difficulty represented as thee number of blocks taken off the grid. */
+    /** Difficulty represented as the number of blocks taken off the grid. */
     final static int DIFFICULTY_EASY = 136;
 
     /** Tokens used for representing numerical values in a grid. */
@@ -27,5 +27,9 @@ public class Constants {
             '8', '9', 'A', 'B',
             'C', 'D', 'E', 'F'
     };
+
+    final static float KEY_PRESSED_VOLUME = 0.1f;
+
+    final static float MOUSE_CLICKED_VOLUME = 1.3f;
 
 }
