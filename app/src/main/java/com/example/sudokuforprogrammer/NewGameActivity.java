@@ -68,6 +68,7 @@ public class NewGameActivity extends AppCompatActivity
     private SoundPool soundPool;
     private int clickSound;
     private int fillSound;
+    private int wrongSound;
     private float volume = 0.5f;
 
     // Setup handler for timer
@@ -110,6 +111,7 @@ public class NewGameActivity extends AppCompatActivity
         soundPool = new SoundPool(2, AudioManager.STREAM_MUSIC, 0);
         fillSound = soundPool.load(this, R.raw.keyboard, 2);
         clickSound = soundPool.load(this, R.raw.mouse, 1);
+        wrongSound = soundPool.load(this, R.raw.wrong, 1);
 
         // Bind UI components to property
         lifeIndicator = findViewById(R.id.game_title_1);
@@ -353,6 +355,7 @@ public class NewGameActivity extends AppCompatActivity
                 && number != game.answerGrid.cells[row][column].value) {
             game.reduceLife();
             renderLife();
+            soundPool.play(wrongSound, volume, volume, 1, 0, 2.0f);
             //reduceLifeAnimation();
 
             if (game.life == 0) {
