@@ -103,7 +103,8 @@ public class NewGameActivity extends AppCompatActivity
         }
 
         // Set up sound effect
-        soundPool = new SoundPool(2, AudioManager.STREAM_MUSIC, 0);
+        // Restrict max stream number so only one sound effect will be played at a time
+        soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 0);
         keyPressedSound = soundPool.load(this, R.raw.keyboard, 2);
         mouseClickedSound = soundPool.load(this, R.raw.mouse, 1);
         wrongSound = soundPool.load(this, R.raw.wrong, 1);
@@ -352,7 +353,7 @@ public class NewGameActivity extends AppCompatActivity
                 && number != game.answerGrid.cells[row][column].value) {
             game.reduceLife();
             renderLife();
-            soundPool.play(wrongSound, volume, volume, 1, 0, 2.0f);
+            soundPool.play(wrongSound, Constants.WRONG_VOLUME, Constants.WRONG_VOLUME, 1, 0, 2.0f);
             //reduceLifeAnimation();
 
             if (game.life == 0) {
@@ -444,8 +445,8 @@ public class NewGameActivity extends AppCompatActivity
             int blockIndicator = blockCoordinate[0] * Grid.BASE_INDEX + blockCoordinate[1];
             sudokuCell.setOnClickListener(v -> {
                 // Play the sound whenever a cell is selected
-                soundPool.play(mouseClickedSound, Constants.MOUSE_CLICKED_VOLUME,
-                        Constants.MOUSE_CLICKED_VOLUME, 10, 0, 1.0f);
+//                soundPool.play(mouseClickedSound, Constants.MOUSE_CLICKED_VOLUME,
+//                        Constants.MOUSE_CLICKED_VOLUME, 1, 0, 1.0f);
                 if (!game.timer.isRunning) {
                     return;
                 }
