@@ -445,7 +445,7 @@ public class NewGameActivity extends AppCompatActivity
             sudokuCell.setOnClickListener(v -> {
                 // Play the sound whenever a cell is selected
                 soundPool.play(mouseClickedSound, Constants.MOUSE_CLICKED_VOLUME,
-                        Constants.MOUSE_CLICKED_VOLUME, 1, 0, 1.0f);
+                        Constants.MOUSE_CLICKED_VOLUME, 10, 0, 1.0f);
                 if (!game.timer.isRunning) {
                     return;
                 }
