@@ -18,13 +18,16 @@ Source code of android Hex-base Sudoku App ~~for programmers~~ with classical te
 
 At the mean time, we are still improving user experience by adding extra functionalities into it.
 
-- [X] Faster puzzle generator
-- [X] Finish History activity connectivity
-- [X] Add long press controller to game control button
+- [x] Faster puzzle generator
+- [x] Finish History activity connectivity
+- [x] Add long press controller to game control button
 - [ ] What to do if the player makes a mistake
-- [X] Erase grid if the game is paused
+- [x] Erase grid if the game is paused
 - [ ] Adapative UI settings
 - [ ] OCR sudoku solver
 - [X] Add sound effects
   - [X] Press sudoku unit: [CLICK]
-  - [X] Press num button: [MECHANIC KEYBOARD]
+  - [x] Press num button: [MECHANIC KEYBOARD]
+  - [ ] Press the wrong button: [ALERT]
+- [ ] Include internationalization
+- [ ] Upload the app to some software stores

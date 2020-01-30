@@ -1,11 +1,7 @@
 package com.example.sudokuforprogrammer;
 
-import androidx.annotation.Nullable;
-
 import java.io.Serializable;
 import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import com.example.sudokuforprogrammer.sudokuMatrixGenerator.SudokuMatrix;
 
