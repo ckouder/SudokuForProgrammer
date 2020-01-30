@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animated-vector android:drawable="@drawable/ic_life_reduce"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <target
+        android:name="translation_y"
+        android:animation="@animator/translation_y_neg"/>
+    <target
+        android:name="opacity"
+        android:animation="@animator/opacity"/>
+</animated-vector>

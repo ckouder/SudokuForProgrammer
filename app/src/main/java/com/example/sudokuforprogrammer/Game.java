@@ -24,7 +24,7 @@ public class Game implements Serializable {
     public final int DIFFICULTY = Constants.DIFFICULTY_EASY;
 
     /** The life number a player has. */
-    public int life = 1;//Constants.LIFE_NUM;
+    public int life = Constants.LIFE_NUM;
 
     /** This is the answer to the puzzle. */
     public Grid answerGrid;

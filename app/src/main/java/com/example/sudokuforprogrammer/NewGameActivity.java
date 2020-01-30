@@ -1,11 +1,14 @@
 package com.example.sudokuforprogrammer;
 
+import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Typeface;
+import android.graphics.drawable.AnimatedVectorDrawable;
+import android.graphics.drawable.AnimationDrawable;
 import android.graphics.fonts.FontFamily;
 import android.icu.text.SimpleDateFormat;
 import android.media.AudioManager;
@@ -92,6 +95,9 @@ public class NewGameActivity extends AppCompatActivity
     // Setup handler for direction button
     private Handler directionButtonHandler = new Handler();
     private Runnable directionButtonRunnable;
+
+    // Setup animation
+    private AnimatedVectorDrawable animation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -353,6 +359,7 @@ public class NewGameActivity extends AppCompatActivity
                 && number != game.answerGrid.cells[row][column].value) {
             game.reduceLife();
             renderLife();
+            reduceLifeAnimation();
 
             if (game.life == 0) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.dialog);
@@ -502,6 +509,13 @@ public class NewGameActivity extends AppCompatActivity
                 Constants.LIFE_NUM,
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         lifeIndicator.setText(life, TextView.BufferType.SPANNABLE);
+    }
+
+    public void reduceLifeAnimation() {
+        View lifeReducer = findViewById(R.id.lifeReducer);
+        lifeReducer.setVisibility(View.VISIBLE);;
+        animation = (AnimatedVectorDrawable) lifeReducer.getBackground();
+        animation.start();
     }
 
     /**
