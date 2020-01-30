@@ -32,4 +32,6 @@ public class Constants {
 
     final static float MOUSE_CLICKED_VOLUME = 1.3f;
 
+    final static float WRONG_VOLUME = 0.05f;
+
 }
