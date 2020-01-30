@@ -63,6 +63,7 @@ public class NewGameActivity extends AppCompatActivity
     private SoundPool soundPool;
     private int mouseClickedSound;
     private int keyPressedSound;
+    private int wrongSound;
     private float volume = 0.5f;
 
     // Setup handler for timer
@@ -105,6 +106,7 @@ public class NewGameActivity extends AppCompatActivity
         soundPool = new SoundPool(2, AudioManager.STREAM_MUSIC, 0);
         keyPressedSound = soundPool.load(this, R.raw.keyboard, 2);
         mouseClickedSound = soundPool.load(this, R.raw.mouse, 1);
+        wrongSound = soundPool.load(this, R.raw.wrong, 1);
 
         // Bind UI components to property
         lifeIndicator = findViewById(R.id.game_title_1);
@@ -350,6 +352,7 @@ public class NewGameActivity extends AppCompatActivity
                 && number != game.answerGrid.cells[row][column].value) {
             game.reduceLife();
             renderLife();
+            soundPool.play(wrongSound, volume, volume, 1, 0, 2.0f);
             //reduceLifeAnimation();
 
             if (game.life == 0) {
@@ -504,13 +507,6 @@ public class NewGameActivity extends AppCompatActivity
                 Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
         lifeIndicator.setText(life, TextView.BufferType.SPANNABLE);
     }
-
-//    public void reduceLifeAnimation() {
-//        View lifeReducer = findViewById(R.id.lifeReducer);
-//        lifeReducer.setVisibility(View.VISIBLE);;
-//        animation = (AnimatedVectorDrawable) lifeReducer.getBackground();
-//        animation.start();
-//    }
 
     /**
      * <E> Save game to sharedPreference

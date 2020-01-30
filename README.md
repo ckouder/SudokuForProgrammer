@@ -21,9 +21,9 @@ At the mean time, we are still improving user experience by adding extra functio
 - [x] Faster puzzle generator
 - [x] Finish History activity connectivity
 - [x] Add long press controller to game control button
-- [ ] What to do if the player makes a mistake
+- [X] What to do if the player makes a mistake
 - [x] Erase grid if the game is paused
-- [ ] Adapative UI settings
+- [X] Adapative UI settings
 - [ ] OCR sudoku solver
 - [X] Add sound effects
   - [X] Press sudoku unit: [CLICK]
