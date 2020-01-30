@@ -28,10 +28,10 @@ public class Constants {
             'C', 'D', 'E', 'F'
     };
 
-    final static float KEY_PRESSED_VOLUME = 0.1f;
+    final static float KEY_PRESSED_VOLUME = 0.12f;
 
     final static float MOUSE_CLICKED_VOLUME = 1.3f;
 
-    final static float WRONG_VOLUME = 0.05f;
+    final static float WRONG_VOLUME = 0.07f;
 
 }
