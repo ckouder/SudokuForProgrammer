@@ -129,6 +129,9 @@ public class NewGameActivity extends AppCompatActivity
         setEventListenersForGameControlButtons();
         setDirectionButtonActions();
 
+        // Setup listener for default return button
+
+
         // recover game states
         if (!game.timer.isRunning) {
             game.timer.start();
@@ -136,6 +139,11 @@ public class NewGameActivity extends AppCompatActivity
         // Update UI
         renderLife();
         renderGrid();
+    }
+
+    @Override
+    public void onBackPressed() {
+        quitButton.performClick();
     }
 
     public void onFragmentInteraction(Uri uri) { }
