@@ -112,4 +112,13 @@
             android:textAlignment="textEnd"
             android:textStyle="bold" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:alpha=".15"
+        android:text="By Pengyue &amp; Bingji"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/mainMaximContainer" />
 </androidx.constraintlayout.widget.ConstraintLayout>
